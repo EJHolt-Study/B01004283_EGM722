@@ -15,9 +15,20 @@ import matplotlib.patches as mpatches
     # Northern Ireland Road Network
     # Settlements
     # Counties
-    # Satellite raster image
+    # Satellite image / DEM
 
 #2  Convert datasets to Geo DataFrames
     # Apply appropriate CRS
 
-#3 Ask the user which 
+#3 Ask the user which inputs county and road types they would like to use
+    # Split county and road type variables
+
+#4 Perform data processing
+    # Select appropriate county
+    # Clip Roads, network
+    # Don't clip towns
+
+# Mapping
+    # Create figure
+    # Set map extent
+    #
