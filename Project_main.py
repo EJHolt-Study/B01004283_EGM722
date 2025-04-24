@@ -11,7 +11,7 @@ import matplotlib.patches as mpatches
 
 ## Script steps ##
 
-#1 Import relevant datasets
+# Importing vector and raster datasets
     # Northern Ireland Road Network
     # Settlements
     # Counties
