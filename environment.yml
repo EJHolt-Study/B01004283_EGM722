@@ -1,4 +1,4 @@
-name: egm722
+name: B01004283_EGM722
 channels:
   - conda-forge
   - defaults
