@@ -11,9 +11,11 @@ from shapely.geometry.polygon import Polygon
 from cartopy.feature import ShapelyFeature
 import matplotlib.patches as mpatches
 
+from DELETE_BEFORE_COMPLETINGpractical2_script import county_names
+
 ## Script steps ##
 
-# Importing vector datasets as GeoDataFrames
+# Importing vector datasets as GeoDataFrameS
 outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # Load NI Border Outline - Shapefile(Polygon)
 settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-500-threshold.shp')) # Load NI Settlements (pop. over 500) - Shapefile(Polygon)
 counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # Load NI County Boundaries - Shapefile(Polygon)
@@ -28,11 +30,13 @@ roads = roads.to_crs(epsg=2158)
 # REVIEW AT LATER DATE: Importing and converting 50m DTM raster
     # DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
 
-# User input step to select appropriate counties
+#User input step to select appropriate counties
+county_names = counties['CountyName'].str.title
 print('Select county for map extent:') # Add initial text
 print('') # Print line break
 print('All') # Print 'All' input option
-print(f:{rowcounties['CountyName'])
+print(county_names)
+
 
 
 #4 Perform data processing
@@ -43,4 +47,3 @@ print(f:{rowcounties['CountyName'])
 # Mapping
     # Create figure
     # Set map extent
-    #
