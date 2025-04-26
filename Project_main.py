@@ -13,22 +13,18 @@ import matplotlib.patches as mpatches
 
 ## Script steps ##
 
-# Importing vector datasets
+# Importing vector datasets as GeoDataFrames
 outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # Load NI Border Outline - Shapefile(Polygon)
 settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-500-threshold.shp')) # Load NI Settlements (pop. over 500) - Shapefile(Polygon)
 counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # Load NI County Boundaries - Shapefile(Polygon)
 roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # Load NI Road Network - Shapefile(Line)
 
-# Importing and converting 50m DTM raster
-DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
+# REVIEW AT LATER DATE: Importing and converting 50m DTM raster
+# DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
 
-print(DTM_csv.min())
-# Convert
-
+# Ensure GeoDataFrames have the correct CRS
 
 
-# Convert datasets to Geo DataFrames
-    # Apply appropriate CRS
 
 #3 Ask the user which inputs county and road types they would like to use
     # Split county and road type variables
