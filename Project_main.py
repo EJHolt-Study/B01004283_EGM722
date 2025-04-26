@@ -23,8 +23,10 @@ roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # Load NI Road
 # DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
 
 # Ensure GeoDataFrames have the correct CRS
-
-
+print (outline.crs)
+print (settlements.crs)
+print (counties.crs)
+print (roads.crs)
 
 #3 Ask the user which inputs county and road types they would like to use
     # Split county and road type variables
