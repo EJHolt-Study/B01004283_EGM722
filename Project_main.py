@@ -19,17 +19,21 @@ settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-5
 counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # Load NI County Boundaries - Shapefile(Polygon)
 roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # Load NI Road Network - Shapefile(Line)
 
+# Converting GeoDataFrames to project CRS (EPSG: 2158)
+outline = outline.to_crs(epsg=2158)
+settlements = settlements.to_crs(epsg=2158)
+counties = counties.to_crs(epsg=2158)
+roads = roads.to_crs(epsg=2158)
+
 # REVIEW AT LATER DATE: Importing and converting 50m DTM raster
-# DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
+    # DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
 
-# Ensure GeoDataFrames have the correct CRS
-print (outline.crs)
-print (settlements.crs)
-print (counties.crs)
-print (roads.crs)
+# User input step to select appropriate counties
+print('Select county for map extent:') # Add initial text
+print('') # Print line break
+print('All') # Print 'All' input option
+print(f:{rowcounties['CountyName'])
 
-#3 Ask the user which inputs county and road types they would like to use
-    # Split county and road type variables
 
 #4 Perform data processing
     # Select appropriate county
