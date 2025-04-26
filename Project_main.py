@@ -10,6 +10,7 @@ from shapely.ops import unary_union
 from shapely.geometry.polygon import Polygon
 from cartopy.feature import ShapelyFeature
 import matplotlib.patches as mpatches
+from clip_features import clip_features
 
 ## Script steps ##
 
@@ -37,12 +38,29 @@ print(counties['CountyName'].to_string(index=False)) # Prints County Names with 
 print('') # Add line break
 selection = (input('Input county name here:')) # Creating use
 
-# Clipping GeoDataFrames to selected county area
-clip_counties = counties.loc[counties['CountyName']==selection] # Creates GDF of clipped county layer
+selection = selection.title() # Ensures that selection is in the correct format
+
+Test_1
+
+while selection != 'All' or (selection in counties['CountyName']) = False:
+
+
+# Creating specified map based on selection
+if selection in counties['CountyName']: # Check if selection is a specific county
+        # Clipping counties GDF to selected area
+    map_counties = counties.loc[counties['CountyName']==selection] # Creates GDF of clipped county layer
+
+        # Clipping additional GDFs to extent of selected area, using clip_features function
+    map_roads = clip_features(roads,map_counties)
+    map_settlements = clip_features(settlements,map_counties)
+
+    print(f'Thank you for selecting County {selection}')
+
+elif selection == 'All': # Check if all counties have been selected
+
 
 
     # Clip Roads, network
-    # Don't clip towns
 
 
 # Mapping
