@@ -1,4 +1,5 @@
 # Import support packages
+import os
 import numpy as np
 import rasterio as rio
 import geopandas as gpd
@@ -12,9 +13,11 @@ import matplotlib.patches as mpatches
 ## Script steps ##
 
 # Importing vector and raster datasets
-    # Northern Ireland Road Network
-    # Settlements
-    # Counties
+outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # Load NI Border Outline - Shapefile(Polygon)
+settlements = gpd.read_file(os.path.abspath('data_files/NI_road.shp')) # Load NI Settlements (pop. over 500) - Shapefile(Polygon)
+counties = gpd.read_file(os.path.abspath('data_files/NI_road.shp')) # Load NI County Boundaries - Shapefile(Polygon)
+roads = gpd.read_file(os.path.abspath('data_files/NI_road.shp')) # Load NI Road Network - Shapefile(Line)
+
     # Satellite image / DEM
 
 #2  Convert datasets to Geo DataFrames
