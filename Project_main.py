@@ -13,13 +13,13 @@ import matplotlib.patches as mpatches
 
 ## Script steps ##
 
-# Importing vector datasets as GeoDataFrameS
+# Importing vector datasets as GeoDataFrames (GDF)
 outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # Load NI Border Outline - Shapefile(Polygon)
 settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-500-threshold.shp')) # Load NI Settlements (pop. over 500) - Shapefile(Polygon)
 counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # Load NI County Boundaries - Shapefile(Polygon)
 roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # Load NI Road Network - Shapefile(Line)
 
-# Converting GeoDataFrames to project CRS (EPSG: 2158)
+# Converting GDFs to project CRS (EPSG: 2158)
 outline = outline.to_crs(epsg=2158)
 settlements = settlements.to_crs(epsg=2158)
 counties = counties.to_crs(epsg=2158)
@@ -37,10 +37,13 @@ print(counties['CountyName'].to_string(index=False)) # Prints County Names with 
 print('') # Add line break
 selection = (input('Input county name here:')) # Creating use
 
-#4 Perform data processing
-    # Select appropriate county
+# Clipping GeoDataFrames to selected county area
+clip_counties = counties.loc[counties['CountyName']==selection] # Creates GDF of clipped county layer
+
+
     # Clip Roads, network
     # Don't clip towns
+
 
 # Mapping
     # Create figure
