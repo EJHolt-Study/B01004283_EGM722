@@ -40,17 +40,16 @@ selection = (input('Input county name here:')) # Creating use
 
 selection = selection.title() # Ensures that selection is in the correct format
 
-Test_1
+while selection != 'All' or counties['CountyName'].count(selection) > 0:
 
-while selection != 'All' or (selection in counties['CountyName']) = False:
-
+    selectipn
 
 # Creating specified map based on selection
 if selection in counties['CountyName']: # Check if selection is a specific county
-        # Clipping counties GDF to selected area
+    # Clipping counties GDF to selected area
     map_counties = counties.loc[counties['CountyName']==selection] # Creates GDF of clipped county layer
 
-        # Clipping additional GDFs to extent of selected area, using clip_features function
+    # Clipping additional GDFs to extent of selected area, using clip_features function
     map_roads = clip_features(roads,map_counties)
     map_settlements = clip_features(settlements,map_counties)
 
