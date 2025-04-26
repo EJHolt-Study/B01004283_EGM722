@@ -20,7 +20,12 @@ counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # Load NI C
 roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # Load NI Road Network - Shapefile(Line)
 
 # Importing and converting 50m DTM raster
-DTM_csv = pd.read_csv(OSNI)
+DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
+
+print(DTM_csv.min())
+# Convert
+
+
 
 # Convert datasets to Geo DataFrames
     # Apply appropriate CRS
