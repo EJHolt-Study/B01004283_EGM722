@@ -11,8 +11,6 @@ from shapely.geometry.polygon import Polygon
 from cartopy.feature import ShapelyFeature
 import matplotlib.patches as mpatches
 
-from DELETE_BEFORE_COMPLETINGpractical2_script import county_names
-
 ## Script steps ##
 
 # Importing vector datasets as GeoDataFrameS
@@ -30,14 +28,14 @@ roads = roads.to_crs(epsg=2158)
 # REVIEW AT LATER DATE: Importing and converting 50m DTM raster
     # DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
 
-#User input step to select appropriate counties
-county_names = counties['CountyName'].str.title
+#Creating user prompt step to select a specific county
+counties['CountyName'] = counties['CountyName'].str.title() # Convert values in 'CountyNames' column to Title Case
 print('Select county for map extent:') # Add initial text
-print('') # Print line break
+print('') # Add line break
 print('All') # Print 'All' input option
-print(county_names)
-
-
+print(counties['CountyName'].to_string(index=False)) # Prints County Names with index removed
+print('') # Add line break
+selection = (input('Input county name here:')) # Creating use
 
 #4 Perform data processing
     # Select appropriate county
