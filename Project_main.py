@@ -47,7 +47,7 @@ while (test_county is False) and (test_all is False): # Check whether a valid in
     # When an invalid input is provided
     selection = (input('Please provide a correct input:')) # Request new input from user
     # Re-run checks on new input
-    select_edited = selection.title()
+    select_edited = selection.title() # Converting new input to title case
     test_county = select_edited in counties['CountyName'].unique()
     test_all = select_edited == 'All'
 
@@ -69,8 +69,10 @@ if select_edited in counties['CountyName'].unique(): # Check if selection is a s
 
 elif select_edited == 'All': # Check if all counties have been selected
     print('Thank you for selecting all counties')
+    print('Generating map')
 
-
+    # Clipping additional GDFs to extent NI border
+    map_roads =
 
     # Clip Roads, network
 
