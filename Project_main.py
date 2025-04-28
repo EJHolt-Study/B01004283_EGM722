@@ -81,11 +81,12 @@ elif select_edited == 'All': # Check if all counties have been selected
     print(map_counties.head())
     print(map_settlements.head())
 
-# Generating Map Features
+## Generating Map Features ##
 
-# Create figure
+# Create figure and map axis
+proj_crs = ccrs.UTM(29) # creatie
 
-    # Set map extent
+# Set map extent
 
 
 print('The script has now ended. To generate a new map, please re-run the project.')
