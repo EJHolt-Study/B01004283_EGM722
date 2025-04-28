@@ -40,9 +40,9 @@ selection = (input('Input county name here:')) # Create user input parameter ste
 
 selection = selection.title() # Ensures that selection is in the correct format
 
-while selection != 'All' or counties['CountyName'].count(selection) > 0:
+# while selection != 'All' or counties['CountyName'].count(selection) > 0:
 
-    selection = (input('Please provide a correct input:'))
+    # selection = (input('Please provide a correct input:'))
 
 # Creating specified map based on selection
 if selection in counties['CountyName']: # Check if selection is a specific county
