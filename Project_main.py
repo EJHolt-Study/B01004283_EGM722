@@ -29,7 +29,7 @@ roads = roads.to_crs(epsg=2158)
 # REVIEW AT LATER DATE: Importing and converting 50m DTM raster
     # DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
 
-#Creating user prompt step to select a specific county
+# Creating user prompt step to select a specific county
 counties['CountyName'] = counties['CountyName'].str.title() # Convert values in 'CountyNames' column to Title Case
 print('Select county for map extent:') # Add initial text
 print('') # Add line break
@@ -38,11 +38,15 @@ print(counties['CountyName'].to_string(index=False)) # Prints County Names with 
 print('') # Add line break
 selection = (input('Input county name here:')) # Create user input parameter step
 
+# Verifying user input
 selection = selection.title() # Ensures that selection is in the correct format
 
-# while selection != 'All' or counties['CountyName'].count(selection) > 0:
+test_county = selection in counties['CountyName'].unique()
+test_all = selection == 'All'
 
-    # selection = (input('Please provide a correct input:'))
+while not test_county or not test_all: # Check whether a valid input has been provided
+
+    selection = (input('Please provide a correct input:'))
 
 # Creating specified map based on selection
 if selection in counties['CountyName']: # Check if selection is a specific county
