@@ -36,13 +36,13 @@ print('') # Add line break
 print('All') # Print 'All' input option
 print(counties['CountyName'].to_string(index=False)) # Prints County Names with index removed
 print('') # Add line break
-selection = (input('Input county name here:')) # Creating use
+selection = (input('Input county name here:')) # Create user input parameter step
 
 selection = selection.title() # Ensures that selection is in the correct format
 
 while selection != 'All' or counties['CountyName'].count(selection) > 0:
 
-    selectipn
+    selection = (input('Please provide a correct input:'))
 
 # Creating specified map based on selection
 if selection in counties['CountyName']: # Check if selection is a specific county
@@ -57,7 +57,7 @@ if selection in counties['CountyName']: # Check if selection is a specific count
 
 elif selection == 'All': # Check if all counties have been selected
 
-
+    print('Thank you for selecting all counties')
 
 # Clip Roads, network
 
