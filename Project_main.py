@@ -58,7 +58,7 @@ if select_edited in counties['CountyName'].unique(): # Check if selection is a s
 
     # Confirm to selection to user and confirm the map is being generated
     print('Thank you for selecting County: ',select_edited)
-    print('Generating map')
+    print('Generating map') # Provide status update
 
     # Clipping additional GDFs to extent of selected area, using clip_features function
     map_roads = clip_features(roads,map_counties) # Creating clipped road network GDF
@@ -68,15 +68,20 @@ if select_edited in counties['CountyName'].unique(): # Check if selection is a s
     print(map_settlements.head())
 
 elif select_edited == 'All': # Check if all counties have been selected
-    print('Thank you for selecting all counties')
-    print('Generating map')
+    print('Thank you for selecting all counties') # Confirm user selection
+    print('Generating map') # Provide status update
 
-    # Clipping additional GDFs to extent of NI border
-    map_roads =clip_features(roads,outline) # Creating clipped road network GDF
-    map_settlements = clip_features(settlements, outline) # Creating GDF for settlements in selected county
+    # Create GDF of all counties combined
+    map_counties = counties.dissolve() # Dissolving counties into single Multi-polygon geometry
 
-# Mapping
-    # Create figure
+    # Clipping additional GDFs to extent of NI border, to remove overlaps
+    map_roads = clip_features(roads,map_counties) # Clipping road network GDF to extent of NI border
+    map_settlements = clip_features(settlements, map_counties) # Clipping settlements GDF to extent of NI border
+
+# Generating Map Features
+
+# Create figure
+
     # Set map extent
 
 
