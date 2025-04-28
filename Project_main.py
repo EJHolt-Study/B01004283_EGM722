@@ -46,21 +46,21 @@ while (test_county is False) and (test_all is False): # Check whether a valid in
 
     selection = (input('Please provide a correct input:'))
     select_edited = selection.title()
-    test_county = selection in counties['CountyName'].unique()
-    test_all = selection == 'All'
+    test_county = select_edited in counties['CountyName'].unique()
+    test_all = select_edited == 'All'
 
 # Creating specified map based on selection
-if selection in counties['CountyName']: # Check if selection is a specific county
+if select_edited in counties['CountyName'].unique(): # Check if selection is a specific county
     # Clipping counties GDF to selected area
-    map_counties = counties.loc[counties['CountyName']==selection] # Creates GDF of clipped county layer
+    map_counties = counties.loc[counties['CountyName']==select_edited] # Creates GDF of clipped county layer
 
     # Clipping additional GDFs to extent of selected area, using clip_features function
     map_roads = clip_features(roads,map_counties)
     map_settlements = clip_features(settlements,map_counties)
 
-    print(f'Thank you for selecting County {selection}')
+    print('Thank you for selecting County: ',select_edited)
 
-elif selection == 'All': # Check if all counties have been selected
+elif select_edited == 'All': # Check if all counties have been selected
 
     print('Thank you for selecting all counties')
 
