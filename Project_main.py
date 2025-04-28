@@ -44,7 +44,9 @@ test_all = select_edited == 'All' # Bool check all counties has been selected
 
 while (test_county is False) and (test_all is False): # Check whether a valid input has been provided
 
-    selection = (input('Please provide a correct input:'))
+    # When an invalid input is provided
+    selection = (input('Please provide a correct input:')) # Request new input from user
+    # Re-run checks on new input
     select_edited = selection.title()
     test_county = select_edited in counties['CountyName'].unique()
     test_all = select_edited == 'All'
@@ -59,12 +61,13 @@ if select_edited in counties['CountyName'].unique(): # Check if selection is a s
     map_settlements = clip_features(settlements,map_counties)
 
     print('Thank you for selecting County: ',select_edited)
+    print(map_counties.head())
 
 elif select_edited == 'All': # Check if all counties have been selected
 
     print('Thank you for selecting all counties')
 
-# Clip Roads, network
+    # Clip Roads, network
 
 
 # Mapping
