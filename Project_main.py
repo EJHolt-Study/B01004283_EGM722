@@ -30,6 +30,7 @@ roads = roads.to_crs(epsg=2158)
 # REVIEW AT LATER DATE: Importing and converting 50m DTM raster
     # DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
 
+
 ## Initial user input step to select map extent ##
 #-----------------------------------------------------------------------------------------------------------------------
 # Creating user prompt step to select a specific county
@@ -39,6 +40,10 @@ print('') # add line break
 print('All') # print 'All' input option
 print(counties['CountyName'].to_string(index=False)) # prints County Names with index removed
 print('') # add line break
+
+print(roads.columns)
+print(roads['Road_class'].unique())
+
 selection = (input('Input county name here:')) # create user input parameter step
 
 select_edited = selection.title() # converting input to title case
@@ -84,6 +89,7 @@ elif select_edited == 'All': # check if all counties have been selected
     print(map_counties.head())
     print(map_settlements.head())
 
+
 ## Generating map features ##
 #-----------------------------------------------------------------------------------------------------------------------
 # Create figure and map axis
@@ -101,6 +107,6 @@ map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='b', facec
 axes.add_feature(map_counties) # Add county layer to map axes
 
 # Separating road GDF into the different road types
-
+#road_motorways = map_roads[map_roads['']
 
 print('The script has now ended. To generate a new map, please re-run the project.')
