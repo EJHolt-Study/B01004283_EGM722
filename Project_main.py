@@ -12,13 +12,14 @@ from cartopy.feature import ShapelyFeature
 import matplotlib.patches as mpatches
 from clip_features import clip_features
 
-## Script steps ##
 
+## Setup project datasets ##
+#-----------------------------------------------------------------------------------------------------------------------
 # Importing vector datasets as GeoDataFrames (GDF)
-outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # Load NI Border Outline - Shapefile(Polygon)
-settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-500-threshold.shp')) # Load NI Settlements (pop. over 500) - Shapefile(Polygon)
-counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # Load NI County Boundaries - Shapefile(Polygon)
-roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # Load NI Road Network - Shapefile(Line)
+outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # load NI Border Outline - Shapefile(Polygon)
+settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-500-threshold.shp')) # load NI Settlements (pop. over 500) - Shapefile(Polygon)
+counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # load NI County Boundaries - Shapefile(Polygon)
+roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # load NI Road Network - Shapefile(Line)
 
 # Converting GDFs to project CRS (EPSG: 2158)
 outline = outline.to_crs(epsg=2158)
@@ -29,64 +30,70 @@ roads = roads.to_crs(epsg=2158)
 # REVIEW AT LATER DATE: Importing and converting 50m DTM raster
     # DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
 
+## Initial user input step to select map extent ##
+#-----------------------------------------------------------------------------------------------------------------------
 # Creating user prompt step to select a specific county
-counties['CountyName'] = counties['CountyName'].str.title() # Convert values in 'CountyNames' column to Title Case
-print('Select county for map extent:') # Add initial text
-print('') # Add line break
-print('All') # Print 'All' input option
-print(counties['CountyName'].to_string(index=False)) # Prints County Names with index removed
-print('') # Add line break
-selection = (input('Input county name here:')) # Create user input parameter step
+counties['CountyName'] = counties['CountyName'].str.title() # convert values in 'CountyNames' column to Title Case
+print('Select county for map extent:') # add initial text
+print('') # add line break
+print('All') # print 'All' input option
+print(counties['CountyName'].to_string(index=False)) # prints County Names with index removed
+print('') # add line break
+selection = (input('Input county name here:')) # create user input parameter step
 
-select_edited = selection.title() # Converting input to title case
-test_county = select_edited in counties['CountyName'].unique() # Bool check if selection is a valid county name
-test_all = select_edited == 'All' # Bool check all counties has been selected
+select_edited = selection.title() # converting input to title case
+test_county = select_edited in counties['CountyName'].unique() # bool check if selection is a valid county name
+test_all = select_edited == 'All' # bool check all counties has been selected
 
-while (test_county is False) and (test_all is False): # Check whether a valid input has been provided
+while (test_county is False) and (test_all is False): # check whether a valid input has been provided
 
     # When an invalid input is provided
-    selection = (input('Please provide a correct input:')) # Request new input from user
+    selection = (input('Please provide a correct input:')) # request new input from user
     # Re-run checks on new input
-    select_edited = selection.title() # Converting new input to title case
+    select_edited = selection.title() # converting new input to title case
     test_county = select_edited in counties['CountyName'].unique()
     test_all = select_edited == 'All'
 
 # Creating specified map based on selection
-if select_edited in counties['CountyName'].unique(): # Check if selection is a specific county
+if select_edited in counties['CountyName'].unique(): # check if selection is a specific county
     # Clipping counties GDF to selected area
-    map_counties = counties.loc[counties['CountyName']==select_edited] # Creates GDF of clipped county layer
+    map_counties = counties.loc[counties['CountyName']==select_edited] # creates GDF of clipped county layer
 
     # Confirm to selection to user and confirm the map is being generated
-    print('Thank you for selecting County: ',select_edited)
+    print('Thank you for selecting County: ',select_edited) # confirm user selection
     print('Generating map') # Provide status update
 
     # Clipping additional GDFs to extent of selected area, using clip_features function
-    map_roads = clip_features(roads,map_counties) # Creating clipped road network GDF
-    map_settlements = clip_features(settlements,map_counties) # Creating GDF for settlements in selected county
+    map_roads = clip_features(roads,map_counties) # creating clipped road network GDF
+    map_settlements = clip_features(settlements,map_counties) # creating GDF for settlements in selected county
 
     print(map_counties.head())
     print(map_settlements.head())
 
-elif select_edited == 'All': # Check if all counties have been selected
-    print('Thank you for selecting all counties') # Confirm user selection
-    print('Generating map') # Provide status update
+elif select_edited == 'All': # check if all counties have been selected
+    print('Thank you for selecting all counties') # confirm user selection
+    print('Generating map') # provide status update
 
     # Create GDF of all counties combined
-    map_counties = counties.dissolve() # Dissolving counties into single Multi-polygon geometry
+    map_counties = counties.dissolve() # dissolving counties into single Multi-polygon geometry
 
     # Clipping additional GDFs to extent of NI border, to remove overlaps
-    map_roads = clip_features(roads,map_counties) # Clipping road network GDF to extent of NI border
-    map_settlements = clip_features(settlements, map_counties) # Clipping settlements GDF to extent of NI border
+    #map_roads = clip_features(roads,map_counties) # clipping road network GDF to extent of NI border
+    #map_settlements = clip_features(settlements, map_counties) # clipping settlements GDF to extent of NI border
 
     print(map_counties.head())
     print(map_settlements.head())
 
-## Generating Map Features ##
-
+## Generating map features ##
+#-----------------------------------------------------------------------------------------------------------------------
 # Create figure and map axis
 proj_crs = ccrs.UTM(29) # create copy of project crs (EPSG: 2158 - UTM zone 29)
+figure = plt.figure(figsize=(10,10)) # creating 10" by 10" figure
+axes = plt.axes(projection=proj_crs) # create the map axes on the figure with project crs
 
 # Set map extent
+minx,miny,maxx,maxy = map_counties.total_bounds # create map extent variables using selected area
+a
 
 
 print('The script has now ended. To generate a new map, please re-run the project.')
