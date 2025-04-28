@@ -39,7 +39,6 @@ print('') # Add line break
 selection = (input('Input county name here:')) # Create user input parameter step
 
 select_edited = selection.title() # Converting input to title case
-
 test_county = select_edited in counties['CountyName'].unique() # Bool check if selection is a valid county name
 test_all = select_edited == 'All' # Bool check all counties has been selected
 
