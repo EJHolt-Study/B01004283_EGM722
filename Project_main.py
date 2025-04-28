@@ -84,7 +84,7 @@ elif select_edited == 'All': # Check if all counties have been selected
 ## Generating Map Features ##
 
 # Create figure and map axis
-proj_crs = ccrs.UTM(29) # creatie
+proj_crs = ccrs.UTM(29) # create copy of project crs (EPSG: 2158 - UTM zone 29)
 
 # Set map extent
 
