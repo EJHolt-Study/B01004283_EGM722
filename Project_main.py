@@ -96,7 +96,11 @@ minx,miny,maxx,maxy = map_counties.total_bounds # create map extent variables us
 axes.set_extent([minx,maxx,miny,maxy],crs=proj_crs) # setting axes extent to variables, using project crs
 
 # Adding map features
-map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='b', facecolor='g')
+map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='b', facecolor='g') # defining county details...
+#... with red edge-color and gXXXXX face-color
+axes.add_feature(map_counties) # Add county layer to map axes
+
+# Separating road GDF into the different road types
 
 
 print('The script has now ended. To generate a new map, please re-run the project.')
