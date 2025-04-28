@@ -46,7 +46,7 @@ test_all = select_edited == 'All' # Bool check all counties has been selected
 while (test_county is False) and (test_all is False): # Check whether a valid input has been provided
 
     selection = (input('Please provide a correct input:'))
-    select_edited =
+    select_edited = selection.title()
     test_county = selection in counties['CountyName'].unique()
     test_all = selection == 'All'
 
