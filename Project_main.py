@@ -62,6 +62,7 @@ if select_edited in counties['CountyName'].unique(): # Check if selection is a s
 
     print('Thank you for selecting County: ',select_edited)
     print(map_counties.head())
+    print(map_settlements.head())
 
 elif select_edited == 'All': # Check if all counties have been selected
 
