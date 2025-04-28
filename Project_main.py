@@ -78,6 +78,9 @@ elif select_edited == 'All': # Check if all counties have been selected
     map_roads = clip_features(roads,map_counties) # Clipping road network GDF to extent of NI border
     map_settlements = clip_features(settlements, map_counties) # Clipping settlements GDF to extent of NI border
 
+    print(map_counties.head())
+    print(map_settlements.head())
+
 # Generating Map Features
 
 # Create figure
