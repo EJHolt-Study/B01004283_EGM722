@@ -38,15 +38,17 @@ print(counties['CountyName'].to_string(index=False)) # Prints County Names with 
 print('') # Add line break
 selection = (input('Input county name here:')) # Create user input parameter step
 
-# Verifying user input
-selection = selection.title() # Ensures that selection is in the correct format
+select_edited = selection.title() # Converting input to title case
 
-test_county = selection in counties['CountyName'].unique()
-test_all = selection == 'All'
+test_county = select_edited in counties['CountyName'].unique() # Bool check if selection is a valid county name
+test_all = select_edited == 'All' # Bool check all counties has been selected
 
-while not test_county or not test_all: # Check whether a valid input has been provided
+while (test_county is False) and (test_all is False): # Check whether a valid input has been provided
 
     selection = (input('Please provide a correct input:'))
+    select_edited =
+    test_county = selection in counties['CountyName'].unique()
+    test_all = selection == 'All'
 
 # Creating specified map based on selection
 if selection in counties['CountyName']: # Check if selection is a specific county
