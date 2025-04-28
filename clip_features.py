@@ -19,6 +19,6 @@ def clip_features(input,overlay):
     """
     clipped_objects = [] # Creates list to contain clipped objects of input layer
     clipped_objects = gpd.clip(input,overlay) # Adding clipped input GDF objects to new list
-    clipped_gpd = gpd.GeoDataFrame(pd.concat(clipped_objects, ignore_index=True)) # Creates combined GDF of clipped GDF objects
+    # clipped_gpd = gpd.GeoDataFrame(pd.concat(clipped_objects, ignore_index=True)) # Creates combined GDF of clipped GDF objects
 
-    return clipped_gpd
+    return clipped_objects
