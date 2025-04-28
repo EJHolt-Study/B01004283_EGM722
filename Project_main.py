@@ -71,12 +71,13 @@ elif select_edited == 'All': # Check if all counties have been selected
     print('Thank you for selecting all counties')
     print('Generating map')
 
-    # Clipping additional GDFs to extent NI border
-    map_roads =
-
-    # Clip Roads, network
-
+    # Clipping additional GDFs to extent of NI border
+    map_roads =clip_features(roads,outline) # Creating clipped road network GDF
+    map_settlements = clip_features(settlements, outline) # Creating GDF for settlements in selected county
 
 # Mapping
     # Create figure
     # Set map extent
+
+
+print('The script has now ended. To generate a new map, please re-run the project.')
