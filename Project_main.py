@@ -50,7 +50,7 @@ while (test_county is False) and (test_all is False): # check whether a valid in
     # When an invalid input is provided
     selection = (input('Please provide a correct input:')) # request new input from user
     # Re-run checks on new input
-    select_edited = selection.title() # converting new input to title case
+    select_edited = selection.title()
     test_county = select_edited in counties['CountyName'].unique()
     test_all = select_edited == 'All'
 
@@ -78,8 +78,8 @@ elif select_edited == 'All': # check if all counties have been selected
     map_counties = counties.dissolve() # dissolving counties into single Multi-polygon geometry
 
     # Clipping additional GDFs to extent of NI border, to remove overlaps
-    #map_roads = clip_features(roads,map_counties) # clipping road network GDF to extent of NI border
-    #map_settlements = clip_features(settlements, map_counties) # clipping settlements GDF to extent of NI border
+    map_roads = roads # clipping road network GDF to extent of NI border
+    map_settlements = settlements # clipping settlements GDF to extent of NI border
 
     print(map_counties.head())
     print(map_settlements.head())
@@ -93,7 +93,10 @@ axes = plt.axes(projection=proj_crs) # create the map axes on the figure with pr
 
 # Set map extent
 minx,miny,maxx,maxy = map_counties.total_bounds # create map extent variables using selected area
-a
+axes.set_extent([minx,maxx,miny,maxy],crs=proj_crs) # setting axes extent to variables, using project crs
+
+# Adding map features
+map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='b', facecolor='g')
 
 
 print('The script has now ended. To generate a new map, please re-run the project.')
