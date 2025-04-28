@@ -22,3 +22,5 @@ def clip_features(input,overlay):
     # clipped_gpd = gpd.GeoDataFrame(pd.concat(clipped_objects, ignore_index=True)) # Creates combined GDF of clipped GDF objects
 
     return clipped_objects
+
+# def road_handles

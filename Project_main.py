@@ -10,7 +10,7 @@ from shapely.ops import unary_union
 from shapely.geometry.polygon import Polygon
 from cartopy.feature import ShapelyFeature
 import matplotlib.patches as mpatches
-from clip_features import clip_features
+from data_processing import clip_features
 
 
 ## Setup project datasets ##
@@ -40,9 +40,6 @@ print('') # add line break
 print('All') # print 'All' input option
 print(counties['CountyName'].to_string(index=False)) # prints County Names with index removed
 print('') # add line break
-
-print(roads.columns)
-print(roads['Road_class'].unique())
 
 selection = (input('Input county name here:')) # create user input parameter step
 
@@ -106,7 +103,15 @@ map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='b', facec
 #... with red edge-color and gXXXXX face-color
 axes.add_feature(map_counties) # Add county layer to map axes
 
-# Separating road GDF into the different road types
-#road_motorways = map_roads[map_roads['']
+# Separating road GDF into the primary road types
+roads_motorways = map_roads[map_roads['Road_class']=='MOTORWAY'] # extracting all motorway road sections
+roads_dualcarr = map_roads[map_roads['Road_class']=='DUAL_CARR'] # extracting all dual-carriageway road sections
+roads_aclass = map_roads[map_roads['Road_class']=='A_CLASS'] # extracting all A-road sections
+roads_bclass = map_roads[map_roads['Road_class']=='B_CLASS'] # extracting all B-road sections
+# Grouping remaining minor road types
+minors = ['<4M_TARRED' '<4M_T_OVER' 'CL_MINOR' 'CL_M_OVER'] # List of remaining road types, to be categorised as minor roads
+roads_minor = map_roads[map_roads['Road_class'].isin(minors)] # extracting all minor road sections
+
+
 
 print('The script has now ended. To generate a new map, please re-run the project.')
