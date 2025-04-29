@@ -108,4 +108,5 @@ roads_minor = map_roads[map_roads['Road_class'].isin(minors)] # extracting all m
 
 
 
+
 print('The script has now ended. To generate a new map, please re-run the project.')
