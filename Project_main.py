@@ -108,7 +108,7 @@ minors = ['<4M_TARRED','<4M_T_OVER','CL_MINOR','CL_M_OVER'] # List of remaining 
 roads_minor = map_roads[map_roads['Road_class'].isin(minors)] # extracting all minor road sections
 
 # Generate road features and symbology for map plot, using roads_symbology function
-roads_motorways = roads_symbology(roads_motorways,'motorways') # Apply motorway symbology
+motorways_plot = roads_symbology(roads_motorways,'motorways') # Apply motorway symbology
 roads_dualcarr = roads_symbology(roads_dualcarr,'dualcarr') # Apply dual-carriageway symbology
 roads_aclass = roads_symbology(roads_aclass,'aclass') # Apply A-road symbology
 roads_bclass = roads_symbology(roads_bclass,'bclass') # Apply B-road symbology
