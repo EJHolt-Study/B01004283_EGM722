@@ -115,7 +115,7 @@ roads_bclass = roads_symbology(roads_bclass,'bclass') # Apply B-road symbology
 #roads_minor = roads_minor(roads_minor,'minor') # Apply minor road symbology
 
 # Add road features
-axes.add_feature(roads_motorways,motorways_symbol) # Add motorways to map
+axes.add_feature(motorways_symbol) # Add motorways to map
 axes.add_feature(roads_dualcarr) # Add dual-carriageways to map
 axes.add_feature(roads_aclass) # Add A-roads to map
 axes.add_feature(roads_bclass) # Add B-roads to map
@@ -123,6 +123,6 @@ axes.add_feature(roads_bclass) # Add B-roads to map
 
 print(figure)
 
-#
+
 
 print('The script has now ended. To generate a new map, please re-run the project.')

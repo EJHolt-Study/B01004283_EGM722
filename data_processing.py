@@ -47,7 +47,7 @@ def roads_symbology(layer,road_type):
     """
     proj_crs = ccrs.UTM(29)  # create copy of project crs (EPSG: 2158 - UTM zone 29)
 
-    symbology = []
+    symbology = layer
 
     if road_type == 'motorway':
         symbology = ShapelyFeature(layer['geometry'],proj_crs,color='tab:blue',linewidth=2)
