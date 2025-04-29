@@ -23,8 +23,20 @@ def clip_features(input,overlay):
 
     return clipped_objects
 
-# def road_handles(layer,road_type)
+def road_handles(layer,road_type)
     """
-    Takes a line GDF for map
+    Takes the subset of the road GDF and creates appropriate symbology for the road class.
+    
+    Parameters
+    ----------
+    layer: GDF
+        Roads GDF for which the symbology with be created
+    
+    road_type: string
+        Layer used to define extent of clipping. Requires polygon geometry
+    
+    Returns
+    -------
+    
     
     """

@@ -12,7 +12,6 @@ from cartopy.feature import ShapelyFeature
 import matplotlib.patches as mpatches
 from data_processing import clip_features
 
-
 ## Setup project datasets ##
 #-----------------------------------------------------------------------------------------------------------------------
 # Importing vector datasets as GeoDataFrames (GDF)
@@ -30,7 +29,6 @@ roads = roads.to_crs(epsg=2158)
 # REVIEW AT LATER DATE: Importing and converting 50m DTM raster
     # DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
 
-
 ## Initial user input step to select map extent ##
 #-----------------------------------------------------------------------------------------------------------------------
 # Creating user prompt step to select a specific county
@@ -40,6 +38,7 @@ print('') # add line break
 print('All') # print 'All' input option
 print(counties['CountyName'].to_string(index=False)) # prints County Names with index removed
 print('') # add line break
+
 
 selection = (input('Input county name here:')) # create user input parameter step
 
@@ -69,9 +68,6 @@ if select_edited in counties['CountyName'].unique(): # check if selection is a s
     map_roads = clip_features(roads,map_counties) # creating clipped road network GDF
     map_settlements = clip_features(settlements,map_counties) # creating GDF for settlements in selected county
 
-    print(map_counties.head())
-    print(map_settlements.head())
-
 elif select_edited == 'All': # check if all counties have been selected
     print('Thank you for selecting all counties') # confirm user selection
     print('Generating map') # provide status update
@@ -82,10 +78,6 @@ elif select_edited == 'All': # check if all counties have been selected
     # Clipping additional GDFs to extent of NI border, to remove overlaps
     map_roads = roads # clipping road network GDF to extent of NI border
     map_settlements = settlements # clipping settlements GDF to extent of NI border
-
-    print(map_counties.head())
-    print(map_settlements.head())
-
 
 ## Generating map features ##
 #-----------------------------------------------------------------------------------------------------------------------
