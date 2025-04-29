@@ -112,14 +112,13 @@ roads_motorways = roads_symbology(roads_motorways,'motorways') # Apply motorway 
 roads_dualcarr = roads_symbology(roads_dualcarr,'dualcarr') # Apply dual-carriageway symbology
 roads_aclass = roads_symbology(roads_aclass,'aclass') # Apply A-road symbology
 roads_bclass = roads_symbology(roads_bclass,'bclass') # Apply B-road symbology
-roads_minor = roads_minor(roads_minor,'minor') # Apply minor road symbology
+#roads_minor = roads_minor(roads_minor,'minor') # Apply minor road symbology
 
 # Add road features
 axes.add_feature(roads_motorways) # Add motorways to map
 axes.add_feature(roads_dualcarr) # Add dual-carriageways to map
 axes.add_feature(roads_aclass) # Add A-roads to map
 axes.add_feature(roads_bclass) # Add B-roads to map
-axes.add_feature(roads_minor) # Add minor roads to map
 
 print(figure)
 
