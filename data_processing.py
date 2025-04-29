@@ -21,7 +21,8 @@ def clip_features(input,overlay):
     clipped_gdf: new clipped gdf, with input values clipped to geometry extent of overlay
     """
     clipped_objects = [] # Creates list to contain clipped objects of input layer
-    clipped_objects = gpd.clip(input,overlay) # Adding clipped input GDF objects to new list
+    clipped_objects = gpd.clip(input,overlay,keep_geom_type=True) # Adding clipped input GDF objects to new list
+    # keep_geom_type=True ensures input geometry type remains consistent
     # clipped_gpd = gpd.GeoDataFrame(pd.concat(clipped_objects, ignore_index=True)) # Creates combined GDF of clipped GDF objects
 
     return clipped_objects
@@ -50,19 +51,19 @@ def roads_symbology(layer, road_type, kwargs=None):
     symbology = layer
 
     if road_type == 'motorway':
-        symbology = ShapelyFeature(layer['geometry'],proj_crs,color='tab:blue',linewidth=1)
+        symbology = ShapelyFeature(layer['geometry'],proj_crs,color='tab:blue',linewidth=1,facecolor='none')
 
     elif road_type == 'dualcarr':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:cyan', linewidth=0.75)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:cyan', linewidth=0.75,facecolor='none')
 
     elif road_type == 'aclass':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:orange', linewidth=0.5)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:orange', linewidth=0.5,facecolor='none')
 
     elif road_type == 'bclass':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:olive', linewidth=0.4)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:olive', linewidth=0.4,facecolor='none')
 
     elif road_type == 'minor':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:white', linewidth=0.3)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:gray', linewidth=0.3,facecolor='none')
 
     else:
         raise ValueError("Provided road class invalid")
