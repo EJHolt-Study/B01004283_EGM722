@@ -50,19 +50,19 @@ def roads_symbology(layer, road_type, kwargs=None):
     symbology = layer
 
     if road_type == 'motorway':
-        symbology = ShapelyFeature(layer['geometry'],proj_crs,color='tab:blue',linewidth=2)
+        symbology = ShapelyFeature(layer['geometry'],proj_crs,color='tab:blue',linewidth=1)
 
     elif road_type == 'dualcarr':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:cyan', linewidth=1.5)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:cyan', linewidth=0.75)
 
     elif road_type == 'aclass':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:orange', linewidth=1)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:orange', linewidth=0.5)
 
     elif road_type == 'bclass':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:olive', linewidth=0.75)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:olive', linewidth=0.4)
 
     elif road_type == 'minor':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:gray', linewidth=2)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:white', linewidth=0.3)
 
     else:
         raise ValueError("Provided road class invalid")

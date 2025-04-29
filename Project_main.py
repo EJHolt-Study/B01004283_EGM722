@@ -119,7 +119,8 @@ axes.add_feature(roads_motorways) # Add motorways to map
 axes.add_feature(roads_dualcarr) # Add dual-carriageways to map
 axes.add_feature(roads_aclass) # Add A-roads to map
 axes.add_feature(roads_bclass) # Add B-roads to map
-# axes.add_feature(roads_minor)
+#axes.add_feature(roads_minor) # Add minor roads to map
 
+plt.show()
 
-print('The script has now ended. To generate a new map, please re-run the project.')
+#print('The script has now ended. To generate a new map, please re-run the project.')
