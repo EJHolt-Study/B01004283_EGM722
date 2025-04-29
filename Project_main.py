@@ -108,19 +108,34 @@ minors = ['<4M_TARRED','<4M_T_OVER','CL_MINOR','CL_M_OVER'] # List of remaining 
 roads_minor = map_roads[map_roads['Road_class'].isin(minors)] # extracting all minor road sections
 
 # Generate road features and symbology for map plot, using roads_symbology function
-roads_motorways = roads_symbology(roads_motorways,'motorway') # Apply motorway symbology
-roads_dualcarr = roads_symbology(roads_dualcarr,'dualcarr') # Apply dual-carriageway symbology
-roads_aclass = roads_symbology(roads_aclass,'aclass') # Apply A-road symbology
-roads_bclass = roads_symbology(roads_bclass,'bclass') # Apply B-road symbology
-#roads_minor = roads_minor(roads_minor,'minor') # Apply minor road symbology
+roads_motorways = roads_symbology(roads_motorways,'motorway') # apply motorway symbology
+roads_dualcarr = roads_symbology(roads_dualcarr,'dualcarr') # apply dual-carriageway symbology
+roads_aclass = roads_symbology(roads_aclass,'aclass') # apply A-road symbology
+roads_bclass = roads_symbology(roads_bclass,'bclass') # apply B-road symbology
+#roads_minor = roads_minor(roads_minor,'minor') # apply minor road symbology
 
 # Add road features
-axes.add_feature(roads_motorways) # Add motorways to map
-axes.add_feature(roads_dualcarr) # Add dual-carriageways to map
-axes.add_feature(roads_aclass) # Add A-roads to map
-axes.add_feature(roads_bclass) # Add B-roads to map
-#axes.add_feature(roads_minor) # Add minor roads to map
+axes.add_feature(roads_motorways) # add motorways to map
+axes.add_feature(roads_dualcarr) # add dual-carriageways to map
+axes.add_feature(roads_aclass) # add A-roads to map
+axes.add_feature(roads_bclass) # add B-roads to map
+#axes.add_feature(roads_minor) # add minor roads to map
 
-plt.show()
+# Plotting the map
+plt.show() # show map figure in pop-out window
 
-#print('The script has now ended. To generate a new map, please re-run the project.')
+# Saving map plot
+save = input('Would you like to save the map (Y/N): ') # new user input parameter to select if map should be saved
+choice1 = save == 'Y' # check if input is yes
+choice2 = save == 'N' # check if input is no
+
+while not choice1 and not choice2: # check if valid input has been provided
+    save = (input('Please provide a correct input (Y or N)') # if invalid, request new input
+    choice1 = save == 'Y' # re-run yes check
+    choice2 = save == 'N' # re=run no check
+
+if save == 'Y': #
+    figure.savefig('NI_County_Map.png', dpi=300, bbox_inches='tight')
+
+else:
+    print('The process has now ended. To generate a new map, please re-run the script.')
