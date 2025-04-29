@@ -95,6 +95,8 @@ map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='b', facec
 #... with red edge-color and gXXXXX face-color
 axes.add_feature(map_counties) # Add county layer to map axes
 
+print(type(map_counties))
+
 # Separating road GDF into the primary road types
 roads_motorways = map_roads[map_roads['Road_class']=='MOTORWAY'] # extracting all motorway road sections
 roads_dualcarr = map_roads[map_roads['Road_class']=='DUAL_CARR'] # extracting all dual-carriageway road sections

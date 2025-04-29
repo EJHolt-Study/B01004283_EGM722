@@ -1,5 +1,8 @@
 import geopandas as gpd
-import pandas as pd
+from shapely.ops import unary_union
+from shapely.geometry.polygon import Polygon
+from cartopy.feature import ShapelyFeature
+import cartopy.crs as ccrs
 
 def clip_features(input,overlay):
     """
@@ -23,7 +26,7 @@ def clip_features(input,overlay):
 
     return clipped_objects
 
-def road_handles(layer,road_type)
+def roads_symbology(layer,road_type):
     """
     Takes the subset of the road GDF and creates appropriate symbology for the road class.
     
@@ -34,9 +37,30 @@ def road_handles(layer,road_type)
     
     road_type: string
         Layer used to define extent of clipping. Requires polygon geometry
-    
+
+        Valid inputs - motorway, dualcarr, aclass, bclass, minor
+
     Returns
     -------
-    
-    
+    road_symbology: class 'cartopy.feature.ShapelyFeature'
+
     """
+    proj_crs = ccrs.UTM(29)  # create copy of project crs (EPSG: 2158 - UTM zone 29)
+
+    if road_type == 'motorway':
+        road_symbology = ShapelyFeature(layer['geometry'],proj_crs,color='blue',linewidth=2)
+
+    elif road_type == 'dualcarr':
+        road_symbology = ShapelyFeature(layer['geometry'], proj_crs, color='cyan', linewidth=1.5)
+
+    elif road_type == 'aclass':
+        road_symbology = ShapelyFeature(layer['geometry'], proj_crs, color='orange', linewidth=1)
+
+    elif road_type == 'bclass':
+        road_symbology = ShapelyFeature(layer['geometry'], proj_crs, color='olive', linewidth=0.75)
+
+    elif road_type == 'minor':
+        road_symbology = ShapelyFeature(layer['geometry'], proj_crs, color='blue', linewidth=2)
+
+    return road_symbology
+
