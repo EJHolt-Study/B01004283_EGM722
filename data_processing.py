@@ -23,4 +23,8 @@ def clip_features(input,overlay):
 
     return clipped_objects
 
-# def road_handles
+# def road_handles(layer,road_type)
+    """
+    Takes a line GDF for map
+    
+    """
