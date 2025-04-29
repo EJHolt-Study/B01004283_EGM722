@@ -26,7 +26,7 @@ def clip_features(input,overlay):
 
     return clipped_objects
 
-def roads_symbology(layer,road_type):
+def roads_symbology(layer, road_type, kwargs=None):
     """
     Takes the subset of the road GDF and creates appropriate symbology for the road class.
     
@@ -63,6 +63,9 @@ def roads_symbology(layer,road_type):
 
     elif road_type == 'minor':
         symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:gray', linewidth=2)
+
+    else:
+        raise ValueError("Provided road class invalid")
 
     return symbology
 
