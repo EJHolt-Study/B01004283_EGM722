@@ -11,6 +11,7 @@ from shapely.geometry.polygon import Polygon
 from cartopy.feature import ShapelyFeature
 import matplotlib.patches as mpatches
 from data_processing import clip_features
+from data_processing import roads_symbology
 
 ## Setup project datasets ##
 #-----------------------------------------------------------------------------------------------------------------------
@@ -91,7 +92,7 @@ minx,miny,maxx,maxy = map_counties.total_bounds # create map extent variables us
 axes.set_extent([minx,maxx,miny,maxy],crs=proj_crs) # setting axes extent to variables, using project crs
 
 # Adding map features
-map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='b', facecolor='g') # defining county details...
+map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='b') # defining county details...
 #... with red edge-color and gXXXXX face-color
 axes.add_feature(map_counties) # Add county layer to map axes
 
@@ -103,10 +104,23 @@ roads_dualcarr = map_roads[map_roads['Road_class']=='DUAL_CARR'] # extracting al
 roads_aclass = map_roads[map_roads['Road_class']=='A_CLASS'] # extracting all A-road sections
 roads_bclass = map_roads[map_roads['Road_class']=='B_CLASS'] # extracting all B-road sections
 # Grouping remaining minor road types
-minors = ['<4M_TARRED' '<4M_T_OVER' 'CL_MINOR' 'CL_M_OVER'] # List of remaining road types, to be categorised as minor roads
+minors = ['<4M_TARRED','<4M_T_OVER','CL_MINOR','CL_M_OVER'] # List of remaining road types, to be categorised as minor roads
 roads_minor = map_roads[map_roads['Road_class'].isin(minors)] # extracting all minor road sections
 
+# Generate road features and symbology for map plot, using roads_symbology function
+roads_motorways = roads_symbology(roads_motorways,'motorways') # Apply motorway symbology
+roads_dualcarr = roads_symbology(roads_dualcarr,'dualcarr') # Apply dual-carriageway symbology
+roads_aclass = roads_symbology(roads_aclass,'aclass') # Apply A-road symbology
+roads_bclass = roads_symbology(roads_bclass,'bclass') # Apply B-road symbology
+roads_minor = roads_minor(roads_minor,'minor') # Apply minor road symbology
 
+# Add road features
+axes.add_feature(roads_motorways) # Add motorways to map
+axes.add_feature(roads_dualcarr) # Add dual-carriageways to map
+axes.add_feature(roads_aclass) # Add A-roads to map
+axes.add_feature(roads_bclass) # Add B-roads to map
+axes.add_feature(roads_minor) # Add minor roads to map
 
+print(figure)
 
 print('The script has now ended. To generate a new map, please re-run the project.')

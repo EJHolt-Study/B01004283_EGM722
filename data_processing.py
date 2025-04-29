@@ -47,20 +47,22 @@ def roads_symbology(layer,road_type):
     """
     proj_crs = ccrs.UTM(29)  # create copy of project crs (EPSG: 2158 - UTM zone 29)
 
+    symbology = []
+
     if road_type == 'motorway':
-        road_symbology = ShapelyFeature(layer['geometry'],proj_crs,color='blue',linewidth=2)
+        symbology = ShapelyFeature(layer['geometry'],proj_crs,color='tab:blue',linewidth=2)
 
     elif road_type == 'dualcarr':
-        road_symbology = ShapelyFeature(layer['geometry'], proj_crs, color='cyan', linewidth=1.5)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:cyan', linewidth=1.5)
 
     elif road_type == 'aclass':
-        road_symbology = ShapelyFeature(layer['geometry'], proj_crs, color='orange', linewidth=1)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:orange', linewidth=1)
 
     elif road_type == 'bclass':
-        road_symbology = ShapelyFeature(layer['geometry'], proj_crs, color='olive', linewidth=0.75)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:olive', linewidth=0.75)
 
     elif road_type == 'minor':
-        road_symbology = ShapelyFeature(layer['geometry'], proj_crs, color='blue', linewidth=2)
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:gray', linewidth=2)
 
-    return road_symbology
+    return symbology
 
