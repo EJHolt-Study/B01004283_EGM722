@@ -127,6 +127,11 @@ settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
                                        edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=0.5)
 axes.add_feature(settlements_symbology)
 
+# Add map labels for urban areas (settlements)
+
+# Add map legend
+
+
 # Plotting the map
 #-----------------------------------------------------------------------------------------------------------------------
 plt.show() # show map figure in pop-out window
@@ -145,7 +150,7 @@ while not choice1 and not choice2: # check if valid input has been provided
 if save == 'Y': # if user selects yes, save map as png
     figure.savefig('NI_County_Map.png', dpi=300, bbox_inches='tight')
     # after saving, print end message
-    print('The process has now ended. To generate a new map, please re-run the script.') 
+    print('The process has now ended. To generate a new map, please re-run the script.')
 
 else: # if user selects no, print end message
     print('The process has now ended. To generate a new map, please re-run the script.')
