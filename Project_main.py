@@ -124,7 +124,7 @@ axes.add_feature(roads_minor) # add minor roads to map
 # Generate symbology for settlements layer
 # Creating cartopy feature class for urban settlements layer, with translucent fill and dashed outline
 settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
-                                       edgecolor='white',facecolor='gray',alpha=0.5)
+                                       edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=0.5)
 axes.add_feature(settlements_symbology)
 
 # Plotting the map
@@ -132,6 +132,7 @@ axes.add_feature(settlements_symbology)
 plt.show() # show map figure in pop-out window
 
 # Saving map plot
+#-----------------------------------------------------------------------------------------------------------------------
 save = input('Would you like to save the map (Y/N): ') # new user input parameter to select if map should be saved
 choice1 = save == 'Y' # check if input is yes
 choice2 = save == 'N' # check if input is no
@@ -141,8 +142,10 @@ while not choice1 and not choice2: # check if valid input has been provided
     choice1 = save == 'Y' # re-run yes check
     choice2 = save == 'N' # re=run no check
 
-if save == 'Y': #
+if save == 'Y': # if user selects yes, save map as png
     figure.savefig('NI_County_Map.png', dpi=300, bbox_inches='tight')
+    # after saving, print end message
+    print('The process has now ended. To generate a new map, please re-run the script.') 
 
-else:
+else: # if user selects no, print end message
     print('The process has now ended. To generate a new map, please re-run the script.')
