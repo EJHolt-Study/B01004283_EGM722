@@ -104,7 +104,8 @@ roads_dualcarr = map_roads[map_roads['Road_class']=='DUAL_CARR'] # extracting al
 roads_aclass = map_roads[map_roads['Road_class']=='A_CLASS'] # extracting all A-road sections
 roads_bclass = map_roads[map_roads['Road_class']=='B_CLASS'] # extracting all B-road sections
 # Grouping remaining minor road types
-roads_minor = map_roads[map_roads['Road_class'].isin(['<4M_TARRED','<4M_T_OVER','CL_MINOR','CL_M_OVER'])] # extracting all minor road sections
+roads_minor = map_roads[map_roads['Road_class'].isin
+                            (['<4M_TARRED','<4M_T_OVER','CL_MINOR','CL_M_OVER'])] # extracting all minor road sections
 
 # Generate road features and symbology for map plot, using roads_symbology function
 roads_motorways = roads_symbology(roads_motorways,'motorway') # apply motorway symbology
@@ -121,10 +122,13 @@ axes.add_feature(roads_bclass) # add B-roads to map
 axes.add_feature(roads_minor) # add minor roads to map
 
 # Generate symbology for settlements layer
-settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,edgecolor='white',linestye='--',alpha=0.5)
-
+# Creating cartopy feature class for urban settlements layer, with translucent fill and dashed outline
+settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
+                                       edgecolor='white',facecolor='gray',alpha=0.5)
+axes.add_feature(settlements_symbology)
 
 # Plotting the map
+#-----------------------------------------------------------------------------------------------------------------------
 plt.show() # show map figure in pop-out window
 
 # Saving map plot
