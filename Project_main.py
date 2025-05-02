@@ -93,10 +93,8 @@ axes.set_extent([minx,maxx,miny,maxy],crs=proj_crs) # setting axes extent to var
 
 # Adding map features
 map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='k',facecolor='none') # defining county details...
-#... with red edge-color and gXXXXX face-color
+#... with black outline and transparent fill
 axes.add_feature(map_counties) # Add county layer to map axes
-
-print(type(map_counties))
 
 # Separating road GDF into the primary road types
 roads_motorways = map_roads[map_roads['Road_class']=='MOTORWAY'] # extracting all motorway road sections
@@ -125,9 +123,14 @@ axes.add_feature(roads_minor) # add minor roads to map
 # Creating cartopy feature class for urban settlements layer, with translucent fill and dashed outline
 settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
                                        edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=0.5)
-axes.add_feature(settlements_symbology)
+axes.add_feature(settlements_symbology) # Add settlement polygons to map
 
 # Add map labels for urban areas (settlements)
+settlement_labels = map_settlements # create copy of settlements GDF for generating labels
+# for ind, row in settlement_labels.iterrows() # iterate across the rows in the GDF
+settlement_labels['geometry'] = settlement_labels['geometry'].centroid
+
+print(settlement_labels.head())
 
 # Add map legend
 
