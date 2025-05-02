@@ -162,7 +162,7 @@ for ind, row in settlement_labels.iterrows(): # iterate across the rows in the G
             xval,yval, # specify label location
             row['Name'].title(), # add label name in title case
             color='black',
-            path_effects=[pe.withStroke(linewidth=2,foreground='white')],
+            path_effects=[pe.withStroke(linewidth=2,foreground='white')],# Add white border to labels
             fontsize=7, # select font size
             transform=proj_crs) # confirm crs as EPSG:2158
 

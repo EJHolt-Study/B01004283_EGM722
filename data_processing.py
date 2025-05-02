@@ -73,6 +73,8 @@ def roads_symbology(layer, road_type,thickness, kwargs=None):
 
     return symbology
 
+
+####### Obtained from coursework
 def legend_items(labels, colors, edge='k', alpha=1):
 
     ################# DELETE LINE ONCE FUNCTION IS EDITED ##########################
