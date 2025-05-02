@@ -6,12 +6,15 @@ import pandas as pd
 import geopandas as gpd
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
+from pygments.styles.dracula import foreground
 from shapely.ops import unary_union
 from shapely.geometry.polygon import Polygon
 from cartopy.feature import ShapelyFeature
 import matplotlib.patches as mpatches
+import matplotlib.patheffects as pe
 from data_processing import clip_features
 from data_processing import roads_symbology
+
 
 ## Setup project datasets ##
 #-----------------------------------------------------------------------------------------------------------------------
@@ -105,13 +108,6 @@ roads_bclass = map_roads[map_roads['Road_class']=='B_CLASS'] # extracting all B-
 roads_minor = map_roads[map_roads['Road_class'].isin
                             (['<4M_TARRED','<4M_T_OVER','CL_MINOR','CL_M_OVER'])] # extracting all minor road sections
 
-# Generate road features and symbology for map plot, using roads_symbology function
-roads_motorways = roads_symbology(roads_motorways,'motorway',1) # apply motorway symbology
-roads_dualcarr = roads_symbology(roads_dualcarr,'dualcarr',0.75) # apply dual-carriageway symbology
-roads_aclass = roads_symbology(roads_aclass,'aclass',0.5) # apply A-road symbology
-roads_bclass = roads_symbology(roads_bclass,'bclass',0.4) # apply B-road symbology
-roads_minor = roads_symbology(roads_minor,'minor',0.3) # apply minor road symbology
-
 ## Specifying map layers based on user selection
 if select_edited in counties['CountyName'].unique(): # check if selection is a specific county
 
@@ -130,12 +126,12 @@ if select_edited in counties['CountyName'].unique(): # check if selection is a s
     axes.add_feature(roads_minor)  # add minor roads to map
 
     map_settlements = map_settlements[map_settlements['Band'].isin
-                    (['A','B','C','D','E','F'])] # keep all urban areas with population>2500
+                    (['A','B','C','D','E','F'])] # keep all urban areas with population>2,500
 
 elif select_edited == 'All': # check if all counties have been selected
 
     # Generate road features and symbology for map plot, using roads_symbology function
-    # Add increased linewidth
+    # Add increased linewidth to account for smaller map scale
     roads_motorways = roads_symbology(roads_motorways, 'motorway', 2)  # apply motorway symbology
     roads_dualcarr = roads_symbology(roads_dualcarr, 'dualcarr', 1)  # apply dual-carriageway symbology
     roads_aclass = roads_symbology(roads_aclass, 'aclass', 0.75)  # apply A-road symbology
@@ -147,12 +143,14 @@ elif select_edited == 'All': # check if all counties have been selected
     axes.add_feature(roads_aclass) # add A-roads to map
     axes.add_feature(roads_bclass) # add B-roads to map
 
+    map_settlements = map_settlements[map_settlements['Band'].isin
+                    (['A', 'B', 'C','D'])]  # keep all urban areas with population>10,000
+
 # Generate symbology for settlements layer
 # Creating cartopy feature class for urban settlements layer, with translucent fill and dashed outline
-map_settlements = map_settlements[map_settlements['Band'].isin
-                    (['A','B','C','D','E','F'])] # filter out settlements with pop<1000 from GDF
 settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
                                        edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=0.5)
+
 axes.add_feature(settlements_symbology) # Add settlement polygons to map
 
 # Add map labels for urban areas (settlements)
@@ -163,6 +161,8 @@ for ind, row in settlement_labels.iterrows(): # iterate across the rows in the G
     axes.text( # add settlement label to map figure
             xval,yval, # specify label location
             row['Name'].title(), # add label name in title case
+            color='black',
+            path_effects=[pe.withStroke(linewidth=2,foreground='white')],
             fontsize=7, # select font size
             transform=proj_crs) # confirm crs as EPSG:2158
 
