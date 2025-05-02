@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from pygments.styles.dracula import foreground
 from shapely.ops import unary_union
 from shapely.geometry.polygon import Polygon
+from shapely import box
 from cartopy.feature import ShapelyFeature
 import matplotlib.patches as mpatches
 import matplotlib.patheffects as pe
@@ -23,6 +24,7 @@ outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # load NI 
 settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-500-threshold.shp')) # load NI Settlements (pop. over 500) - Shapefile(Polygon)
 counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # load NI County Boundaries - Shapefile(Polygon)
 roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # load NI Road Network - Shapefile(Line)
+lakes = gpd.read_file(os.path.abspath('data_files/.shp')) # load NI Road Network - Shapefile(Line)
 
 # Converting GDFs to project CRS (EPSG: 2158)
 outline = outline.to_crs(epsg=2158)
@@ -93,6 +95,16 @@ axes = plt.axes(projection=proj_crs) # create the map axes on the figure with pr
 # Set map extent
 minx,miny,maxx,maxy = map_counties.total_bounds # create map extent variables using selected area
 axes.set_extent([minx,maxx,miny,maxy],crs=proj_crs) # setting axes extent to variables, using project crs
+
+# Add base color to represent lake bodies and coastal regions
+base = gpd.GeoDataFrame(geometry=[box(minx,miny,maxx,maxy)],crs=proj_crs) # create box GDF covering plot bounds
+base_colour = ShapelyFeature(base['geometry'],
+                             proj_crs,edgecolor='none',facecolor='lightblue') # define symbology for base layer
+axes.add_feature(base_colour,zorder=0) # add base layer to map, zorder used ensure plotting as bottom layer
+
+# Add NI outline to provide land background
+land_base = ShapelyFeature(outline['geometry'],proj_crs,edgecolor='none',facecolor='green')
+axes.add_feature(land_base,zorder=1)
 
 # Adding map features
 map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='k',facecolor='none') # defining county details...
@@ -165,6 +177,8 @@ for ind, row in settlement_labels.iterrows(): # iterate across the rows in the G
             path_effects=[pe.withStroke(linewidth=2,foreground='white')],# Add white border to labels
             fontsize=7, # select font size
             transform=proj_crs) # confirm crs as EPSG:2158
+
+
 
 # Add map legend
 
