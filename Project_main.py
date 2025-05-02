@@ -114,6 +114,14 @@ roads_minor = roads_symbology(roads_minor,'minor',0.3) # apply minor road symbol
 
 ## Specifying map layers based on user selection
 if select_edited in counties['CountyName'].unique(): # check if selection is a specific county
+
+    # Generate road features and symbology for map plot, using roads_symbology function
+    roads_motorways = roads_symbology(roads_motorways, 'motorway', 1)  # apply motorway symbology
+    roads_dualcarr = roads_symbology(roads_dualcarr, 'dualcarr', 0.75)  # apply dual-carriageway symbology
+    roads_aclass = roads_symbology(roads_aclass, 'aclass', 0.5)  # apply A-road symbology
+    roads_bclass = roads_symbology(roads_bclass, 'bclass', 0.4)  # apply B-road symbology
+    roads_minor = roads_symbology(roads_minor, 'minor', 0.3)  # apply minor road symbology
+
     # Add all road types to the plot
     axes.add_feature(roads_motorways)  # add motorways to map
     axes.add_feature(roads_dualcarr)  # add dual-carriageways to map
@@ -124,15 +132,20 @@ if select_edited in counties['CountyName'].unique(): # check if selection is a s
     map_settlements = map_settlements[map_settlements['Band'].isin
                     (['A','B','C','D','E','F'])] # keep all urban areas with population>2500
 
+elif select_edited == 'All': # check if all counties have been selected
 
-else
+    # Generate road features and symbology for map plot, using roads_symbology function
+    # Add increased linewidth
+    roads_motorways = roads_symbology(roads_motorways, 'motorway', 2)  # apply motorway symbology
+    roads_dualcarr = roads_symbology(roads_dualcarr, 'dualcarr', 1)  # apply dual-carriageway symbology
+    roads_aclass = roads_symbology(roads_aclass, 'aclass', 0.75)  # apply A-road symbology
+    roads_bclass = roads_symbology(roads_bclass, 'bclass', 0.5)  # apply B-road symbology
 
-# Add road features
-axes.add_feature(roads_motorways) # add motorways to map
-axes.add_feature(roads_dualcarr) # add dual-carriageways to map
-axes.add_feature(roads_aclass) # add A-roads to map
-axes.add_feature(roads_bclass) # add B-roads to map
-axes.add_feature(roads_minor) # add minor roads to map
+    # Add all road features except minor roads
+    axes.add_feature(roads_motorways) # add motorways to map
+    axes.add_feature(roads_dualcarr) # add dual-carriageways to map
+    axes.add_feature(roads_aclass) # add A-roads to map
+    axes.add_feature(roads_bclass) # add B-roads to map
 
 # Generate symbology for settlements layer
 # Creating cartopy feature class for urban settlements layer, with translucent fill and dashed outline

@@ -53,22 +53,22 @@ def roads_symbology(layer, road_type,thickness, kwargs=None):
 
     symbology = layer
 
-    if road_type == 'motorway':
+    if road_type == 'motorway': # set symbology for motorway GDF
         symbology = ShapelyFeature(layer['geometry'],proj_crs,color='tab:blue',linewidth=thickness,facecolor='none')
 
-    elif road_type == 'dualcarr':
+    elif road_type == 'dualcarr': # set symbology for dual-carriageway GDF
         symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:cyan', linewidth=thickness,facecolor='none')
 
-    elif road_type == 'aclass':
+    elif road_type == 'aclass': # set symbology for a-roads GDF
         symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:orange', linewidth=thickness,facecolor='none')
 
-    elif road_type == 'bclass':
+    elif road_type == 'bclass': # set symbology for b-roads GDF
         symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:olive', linewidth=thickness,facecolor='none')
 
-    elif road_type == 'minor':
+    elif road_type == 'minor': # set symbology for minor roads GDF
         symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:gray', linewidth=thickness,facecolor='none')
 
-    else:
+    else: # return error message if invaild road type is provided
         raise ValueError("Provided road class invalid")
 
     return symbology
