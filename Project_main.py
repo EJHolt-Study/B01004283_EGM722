@@ -125,10 +125,11 @@ settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
                                        edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=0.5)
 axes.add_feature(settlements_symbology) # Add settlement polygons to map
 
-print(map_settlements['Band'].unique())
+# Settlement bands - 'A','B','C','D','E','F'
 
 # Add map labels for urban areas (settlements)
-settlement_labels = map_settlements # create copy of settlements GDF for generating labels
+settlement_labels = map_settlements[map_settlements['Band'].isin # create copy of settlements GDF for generating labels
+        (['A','B','C','D','E','F'])]
 settlement_labels['geometry'] = settlement_labels['geometry'].centroid # Converts GDF geometry to centroid point
 for ind, row in settlement_labels.iterrows(): # iterate across the rows in the GDF
     xval, yval = row.geometry.x, row.geometry.y # obtain x and y co-ordinate values for each row
