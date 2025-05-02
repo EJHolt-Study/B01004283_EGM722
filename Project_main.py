@@ -127,10 +127,14 @@ axes.add_feature(settlements_symbology) # Add settlement polygons to map
 
 # Add map labels for urban areas (settlements)
 settlement_labels = map_settlements # create copy of settlements GDF for generating labels
-# for ind, row in settlement_labels.iterrows() # iterate across the rows in the GDF
-settlement_labels['geometry'] = settlement_labels['geometry'].centroid
-
-print(settlement_labels.head())
+settlement_labels['geometry'] = settlement_labels['geometry'].centroid # Converts GDF geometry to centroid point
+for ind, row in settlement_labels.iterrows(): # iterate across the rows in the GDF
+    xval, yval = row.geometry.x, row.geometry.y # obtain x and y co-ordinate values for each row
+    axes.text( # add settlement label to map figure
+            xval,yval, # specify label location
+            row['Name'].title(), # add label name in title case
+            fontsize=7, # select font size
+            transform=proj_crs) # confirm crs as EPSG:2158
 
 # Add map legend
 
