@@ -77,8 +77,8 @@ elif select_edited == 'All': # check if all counties have been selected
     map_counties = counties.dissolve() # dissolving counties into single Multi-polygon geometry
 
     # Clipping additional GDFs to extent of NI border, to remove overlaps
-    map_roads = roads # clipping road network GDF to extent of NI border
-    map_settlements = settlements # clipping settlements GDF to extent of NI border
+    map_roads = roads # updating variable name to match remaining script
+    map_settlements = settlements # updating variable name to match remaining script
 
 ## Generating map features ##
 #-----------------------------------------------------------------------------------------------------------------------
@@ -121,15 +121,14 @@ axes.add_feature(roads_minor) # add minor roads to map
 
 # Generate symbology for settlements layer
 # Creating cartopy feature class for urban settlements layer, with translucent fill and dashed outline
+map_settlements = map_settlements[map_settlements['Band'].isin
+                    (['A','B','C','D','E','F','G'])] # filter out settlements with pop<1000 from GDF
 settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
                                        edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=0.5)
 axes.add_feature(settlements_symbology) # Add settlement polygons to map
 
-# Settlement bands - 'A','B','C','D','E','F'
-
 # Add map labels for urban areas (settlements)
-settlement_labels = map_settlements[map_settlements['Band'].isin # create copy of settlements GDF for generating labels
-        (['A','B','C','D','E','F'])]
+settlement_labels = map_settlements # creating new GDF to for label generation
 settlement_labels['geometry'] = settlement_labels['geometry'].centroid # Converts GDF geometry to centroid point
 for ind, row in settlement_labels.iterrows(): # iterate across the rows in the GDF
     xval, yval = row.geometry.x, row.geometry.y # obtain x and y co-ordinate values for each row
