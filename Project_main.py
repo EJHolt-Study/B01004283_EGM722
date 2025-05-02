@@ -24,7 +24,7 @@ outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # load NI 
 settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-500-threshold.shp')) # load NI Settlements (pop. over 500) - Shapefile(Polygon)
 counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # load NI County Boundaries - Shapefile(Polygon)
 roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # load NI Road Network - Shapefile(Line)
-lakes = gpd.read_file(os.path.abspath('data_files/.shp')) # load NI Road Network - Shapefile(Line)
+lakes = gpd.read_file(os.path.abspath('data_files/Lake_Water_Bodies_2016.shp')) # load NI Road Network - Shapefile(Line)
 
 # Converting GDFs to project CRS (EPSG: 2158)
 outline = outline.to_crs(epsg=2158)
