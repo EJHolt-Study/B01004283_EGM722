@@ -16,18 +16,19 @@ import matplotlib.patheffects as pe
 from data_processing import clip_features
 from data_processing import roads_symbology
 
-
 ## Setup project datasets ##
 #-----------------------------------------------------------------------------------------------------------------------
 # Importing vector datasets as GeoDataFrames (GDF)
 outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # load NI Border Outline - Shapefile(Polygon)
+lakes = gpd.read_file(os.path.abspath('data_files/Lake_Water_Bodies_2016.shp')) # load NI lake bodies - Shapefile(polygon)
 settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-500-threshold.shp')) # load NI Settlements (pop. over 500) - Shapefile(Polygon)
 counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # load NI County Boundaries - Shapefile(Polygon)
 roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # load NI Road Network - Shapefile(Line)
-lakes = gpd.read_file(os.path.abspath('data_files/Lake_Water_Bodies_2016.shp')) # load NI Road Network - Shapefile(Line)
+
 
 # Converting GDFs to project CRS (EPSG: 2158)
 outline = outline.to_crs(epsg=2158)
+lakes = lakes.to_crs(epsg=2158)
 settlements = settlements.to_crs(epsg=2158)
 counties = counties.to_crs(epsg=2158)
 roads = roads.to_crs(epsg=2158)
@@ -44,7 +45,6 @@ print('') # add line break
 print('All') # print 'All' input option
 print(counties['CountyName'].to_string(index=False)) # prints County Names with index removed
 print('') # add line break
-
 
 selection = (input('Input county name here:')) # create user input parameter step
 
@@ -105,6 +105,10 @@ axes.add_feature(base_colour,zorder=0) # add base layer to map, zorder used ensu
 # Add NI outline to provide land background
 land_base = ShapelyFeature(outline['geometry'],proj_crs,edgecolor='none',facecolor='green')
 axes.add_feature(land_base,zorder=1)
+
+# Add NI lake bodies shapefile
+map_lakes = ShapelyFeature(lakes['geometry'],proj_crs,edgecolor='none',facecolor='blue')
+axes.add_feature(map_lakes,zorder=2)
 
 # Adding map features
 map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='k',facecolor='none') # defining county details...
@@ -177,8 +181,6 @@ for ind, row in settlement_labels.iterrows(): # iterate across the rows in the G
             path_effects=[pe.withStroke(linewidth=2,foreground='white')],# Add white border to labels
             fontsize=7, # select font size
             transform=proj_crs) # confirm crs as EPSG:2158
-
-
 
 # Add map legend
 
