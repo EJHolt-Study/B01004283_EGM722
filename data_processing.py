@@ -27,7 +27,7 @@ def clip_features(input,overlay):
 
     return clipped_objects
 
-def roads_symbology(layer, road_type, kwargs=None):
+def roads_symbology(layer, road_type,thickness, kwargs=None):
     """
     Takes the subset of the road GDF and creates appropriate symbology for the road class.
     
@@ -41,6 +41,9 @@ def roads_symbology(layer, road_type, kwargs=None):
 
         Valid inputs - motorway, dualcarr, aclass, bclass, minor
 
+    thickness: float
+        Thickness of line layer symbology
+
     Returns
     -------
     road_symbology: class 'cartopy.feature.ShapelyFeature'
@@ -51,22 +54,54 @@ def roads_symbology(layer, road_type, kwargs=None):
     symbology = layer
 
     if road_type == 'motorway':
-        symbology = ShapelyFeature(layer['geometry'],proj_crs,color='tab:blue',linewidth=1,facecolor='none')
+        symbology = ShapelyFeature(layer['geometry'],proj_crs,color='tab:blue',linewidth=thickness,facecolor='none')
 
     elif road_type == 'dualcarr':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:cyan', linewidth=0.75,facecolor='none')
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:cyan', linewidth=thickness,facecolor='none')
 
     elif road_type == 'aclass':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:orange', linewidth=0.5,facecolor='none')
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:orange', linewidth=thickness,facecolor='none')
 
     elif road_type == 'bclass':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:olive', linewidth=0.4,facecolor='none')
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:olive', linewidth=thickness,facecolor='none')
 
     elif road_type == 'minor':
-        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:gray', linewidth=0.3,facecolor='none')
+        symbology = ShapelyFeature(layer['geometry'], proj_crs, color='tab:gray', linewidth=thickness,facecolor='none')
 
     else:
         raise ValueError("Provided road class invalid")
 
     return symbology
 
+def legend_items(labels, colors, edge='k', alpha=1):
+
+    ################# DELETE LINE ONCE FUNCTION IS EDITED ##########################
+    """
+    Generate matplotlib patch handles to create a legend of each of the features in the map.
+
+    Parameters
+    ----------
+
+    labels : list(str)
+        the text labels of the features to add to the legend
+
+    colors : list(matplotlib color)
+        the colors used for each of the features included in the map.
+
+    edge : matplotlib color (default: 'k')
+        the color to use for the edge of the legend patches.
+
+    alpha : float (default: 1.0)
+        the alpha value to use for the legend patches.
+
+    Returns
+    -------
+
+    handles : list(matplotlib.patches.Rectangle)
+        the list of legend patches to pass to ax.legend()
+    """
+    lc = len(colors)  # get the length of the color list
+    handles = [] # create an empty list
+    for ii in range(len(labels)): # for each label and color pair that we're given, make an empty box to pass to our legend
+        handles.append(mpatches.Rectangle((0, 0), 1, 1, facecolor=colors[ii % lc], edgecolor=edge, alpha=alpha))
+    return handles

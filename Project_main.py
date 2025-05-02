@@ -56,7 +56,7 @@ while (test_county is False) and (test_all is False): # check whether a valid in
     test_county = select_edited in counties['CountyName'].unique()
     test_all = select_edited == 'All'
 
-# Creating specified map based on selection
+# Clipping map features based on specified map based on selection
 if select_edited in counties['CountyName'].unique(): # check if selection is a specific county
     # Clipping counties GDF to selected area
     map_counties = counties.loc[counties['CountyName']==select_edited] # creates GDF of clipped county layer
@@ -106,11 +106,26 @@ roads_minor = map_roads[map_roads['Road_class'].isin
                             (['<4M_TARRED','<4M_T_OVER','CL_MINOR','CL_M_OVER'])] # extracting all minor road sections
 
 # Generate road features and symbology for map plot, using roads_symbology function
-roads_motorways = roads_symbology(roads_motorways,'motorway') # apply motorway symbology
-roads_dualcarr = roads_symbology(roads_dualcarr,'dualcarr') # apply dual-carriageway symbology
-roads_aclass = roads_symbology(roads_aclass,'aclass') # apply A-road symbology
-roads_bclass = roads_symbology(roads_bclass,'bclass') # apply B-road symbology
-roads_minor = roads_symbology(roads_minor,'minor') # apply minor road symbology
+roads_motorways = roads_symbology(roads_motorways,'motorway',1) # apply motorway symbology
+roads_dualcarr = roads_symbology(roads_dualcarr,'dualcarr',0.75) # apply dual-carriageway symbology
+roads_aclass = roads_symbology(roads_aclass,'aclass',0.5) # apply A-road symbology
+roads_bclass = roads_symbology(roads_bclass,'bclass',0.4) # apply B-road symbology
+roads_minor = roads_symbology(roads_minor,'minor',0.3) # apply minor road symbology
+
+## Specifying map layers based on user selection
+if select_edited in counties['CountyName'].unique(): # check if selection is a specific county
+    # Add all road types to the plot
+    axes.add_feature(roads_motorways)  # add motorways to map
+    axes.add_feature(roads_dualcarr)  # add dual-carriageways to map
+    axes.add_feature(roads_aclass)  # add A-roads to map
+    axes.add_feature(roads_bclass)  # add B-roads to map
+    axes.add_feature(roads_minor)  # add minor roads to map
+
+    map_settlements = map_settlements[map_settlements['Band'].isin
+                    (['A','B','C','D','E','F'])] # keep all urban areas with population>2500
+
+
+else
 
 # Add road features
 axes.add_feature(roads_motorways) # add motorways to map
@@ -122,7 +137,7 @@ axes.add_feature(roads_minor) # add minor roads to map
 # Generate symbology for settlements layer
 # Creating cartopy feature class for urban settlements layer, with translucent fill and dashed outline
 map_settlements = map_settlements[map_settlements['Band'].isin
-                    (['A','B','C','D','E','F','G'])] # filter out settlements with pop<1000 from GDF
+                    (['A','B','C','D','E','F'])] # filter out settlements with pop<1000 from GDF
 settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
                                        edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=0.5)
 axes.add_feature(settlements_symbology) # Add settlement polygons to map
