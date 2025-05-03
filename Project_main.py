@@ -130,7 +130,8 @@ roads_minor = map_roads[map_roads['Road_class'].isin
 if select_edited in counties['CountyName'].unique(): # check if selection is a specific county
 
     # Add map title
-    
+    axes.title(f'County {select_edited} road network and urban areas', # Add title w/ selected county
+               loc='center') # align title to centre of the axes
 
     # Generate road features and symbology for map plot, using roads_symbology function
     roads_motorways = roads_symbology(roads_motorways, 'motorway', 1)  # apply motorway symbology
