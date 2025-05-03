@@ -6,13 +6,15 @@ import pandas as pd
 import geopandas as gpd
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+import matplotlib.patheffects as pe
+from matplotlib_map_utils.core.north_arrow import NorthArrow, north_arrow
+from matplotlib_map_utils.core.scale_bar import ScaleBar, scale_bar
 from pygments.styles.dracula import foreground
 from shapely.ops import unary_union
 from shapely.geometry.polygon import Polygon
 from shapely import box
 from cartopy.feature import ShapelyFeature
-import matplotlib.patches as mpatches
-import matplotlib.patheffects as pe
 from data_processing import clip_features
 from data_processing import roads_symbology
 
