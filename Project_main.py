@@ -33,9 +33,6 @@ settlements = settlements.to_crs(epsg=2158)
 counties = counties.to_crs(epsg=2158)
 roads = roads.to_crs(epsg=2158)
 
-# REVIEW AT LATER DATE: Importing and converting 50m DTM raster
-    # DTM_csv = pd.read_csv(os.path.abspath('data_files/OSNI_OpenData_50m_DTM.csv')) # Load CSV of elevation points
-
 ## Initial user input step to select map extent ##
 #-----------------------------------------------------------------------------------------------------------------------
 # Creating user prompt step to select a specific county
@@ -130,7 +127,7 @@ roads_minor = map_roads[map_roads['Road_class'].isin
 if select_edited in counties['CountyName'].unique(): # check if selection is a specific county
 
     # Add map title
-    axes.title(f'County {select_edited} road network and urban areas', # Add title w/ selected county
+    axes.title(f'County {select_edited} Road Network and Urban Areas', # Add title w/ selected county
                loc='center') # align title to centre of the axes
 
     # Generate road features and symbology for map plot, using roads_symbology function
@@ -152,6 +149,10 @@ if select_edited in counties['CountyName'].unique(): # check if selection is a s
                     (['A','B','C','D','E','F'])] # keep all urban areas with population>2,500
 
 elif select_edited == 'All': # check if all counties have been selected
+
+    # Add map title
+    axes.title('Northern Ireland Primary Road Network and Urban Areas',  # Add title w/ selected county
+               loc='center')  # align title to centre of the axes
 
     # Generate road features and symbology for map plot, using roads_symbology function
     # Add increased linewidth to account for smaller map scale
@@ -190,10 +191,14 @@ for ind, row in settlement_labels.iterrows(): # iterate across the rows in the G
             fontsize=7, # select font size
             transform=proj_crs) # confirm crs as EPSG:2158
 
+#Add North Arrow
+north_arrow
+
 # Add map legend
 
 # Plotting the map
 #-----------------------------------------------------------------------------------------------------------------------
+print('Once you have reviewed the map, please close the figure window')
 plt.show() # show map figure in pop-out window
 
 # Saving map plot
