@@ -10,4 +10,5 @@ dependencies:
   - ipywidgets
   - rasterio
   - pyepsg
-  - folium
+  - matplotlib
+  - matplotlib_map_utils

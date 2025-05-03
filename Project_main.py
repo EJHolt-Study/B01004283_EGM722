@@ -10,7 +10,7 @@ import matplotlib.patches as mpatches
 import matplotlib.patheffects as pe
 from matplotlib_map_utils.core.north_arrow import NorthArrow, north_arrow
 from matplotlib_map_utils.core.scale_bar import ScaleBar, scale_bar
-from pygments.styles.dracula import foreground
+#from pygments.styles.dracula import foreground
 from shapely.ops import unary_union
 from shapely.geometry.polygon import Polygon
 from shapely import box
@@ -129,7 +129,8 @@ roads_minor = map_roads[map_roads['Road_class'].isin
 if select_edited in counties['CountyName'].unique(): # check if selection is a specific county
 
     # Add map title
-    axes.title(f'County {select_edited} Road Network and Urban Areas', # Add title w/ selected county
+    title = str(f'County {select_edited} Road Network and Urban Areas') # Create string for title w/ specific county
+    plt.title(title, # Add title w/ selected county
                loc='center') # align title to centre of the axes
 
     # Generate road features and symbology for map plot, using roads_symbology function
@@ -194,7 +195,12 @@ for ind, row in settlement_labels.iterrows(): # iterate across the rows in the G
             transform=proj_crs) # confirm crs as EPSG:2158
 
 #Add North Arrow
-north_arrow
+northarrow = NorthArrow( # create north arrow class
+    location="upper left", # position in upper left of axis
+    scale=0.3, # set size as 0.5"
+    rotation={"degrees":0})  # set rotation as 0
+axes.add_artist(northarrow) # add north arrow to map
+
 
 # Add map legend
 

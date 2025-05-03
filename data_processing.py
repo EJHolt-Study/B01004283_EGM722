@@ -20,10 +20,8 @@ def clip_features(input,overlay):
     -------
     clipped_gdf: new clipped gdf, with input values clipped to geometry extent of overlay
     """
-    clipped_objects = [] # Creates list to contain clipped objects of input layer
-    clipped_objects = gpd.clip(input,overlay,keep_geom_type=True) # Adding clipped input GDF objects to new list
-    # keep_geom_type=True ensures input geometry type remains consistent
-    # clipped_gpd = gpd.GeoDataFrame(pd.concat(clipped_objects, ignore_index=True)) # Creates combined GDF of clipped GDF objects
+    clipped_objects = gpd.clip(input,overlay, # Adding clipped input GDF into new GDF objects to new list
+                        keep_geom_type=True) # keep_geom_type=True ensures input geometry type remains consistent
 
     return clipped_objects
 
