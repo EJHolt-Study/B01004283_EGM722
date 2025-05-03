@@ -177,7 +177,7 @@ elif select_edited == 'All': # check if all counties have been selected
 # Generate symbology for settlements layer
 # Creating cartopy feature class for urban settlements layer, with translucent fill and dashed outline
 settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
-                                       edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=0.5)
+                                       edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=0.7)
 
 axes.add_feature(settlements_symbology) # Add settlement polygons to map
 
