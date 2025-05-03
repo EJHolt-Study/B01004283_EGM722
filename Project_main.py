@@ -204,9 +204,11 @@ northarrow = NorthArrow( # create North Arrow class
 axes.add_artist(northarrow) # add North Arrow to map
 
 # Add Scale Bar
-sbar = ScaleBar(location='lower left',style="ticks",bar={"projection":2158,"minor_type":"first"},
-                labels={"style":"major"})
-axes.add_artist(sbar) # add scale bar to map
+sbar = ScaleBar( # create Scale Bar class
+                location='lower left', # position in bottom left of axis
+                style="ticks",bar={"projection":2158,"minor_type":"first"}, # define line style and division locations
+                labels={"style":"major"}) # add labels to all major divisions
+axes.add_artist(sbar) # add Scale Bar to map
 
 # Add map legend
 
