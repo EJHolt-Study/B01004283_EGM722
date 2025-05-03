@@ -103,12 +103,14 @@ base_colour = ShapelyFeature(base['geometry'],
 axes.add_feature(base_colour,zorder=0) # add base layer to map, zorder used ensure plotting as bottom layer
 
 # Add NI outline to provide land background
-land_base = ShapelyFeature(outline['geometry'],proj_crs,edgecolor='none',facecolor='green')
-axes.add_feature(land_base,zorder=1)
+land_base = ShapelyFeature(outline['geometry'],proj_crs,edgecolor='none',
+                           facecolor='green') # define symbology for land background layer
+axes.add_feature(land_base,zorder=1) # add land background to map above base layer
 
 # Add NI lake bodies shapefile
-map_lakes = ShapelyFeature(lakes['geometry'],proj_crs,edgecolor='none',facecolor='blue')
-axes.add_feature(map_lakes,zorder=2)
+map_lakes = ShapelyFeature(lakes['geometry'],proj_crs,edgecolor='none',
+                           facecolor='blue') # define lakes symbology
+axes.add_feature(map_lakes,zorder=2) # add lakes polygons to map above base layer and land background
 
 # Adding map features
 map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='k',facecolor='none') # defining county details...
@@ -124,8 +126,11 @@ roads_bclass = map_roads[map_roads['Road_class']=='B_CLASS'] # extracting all B-
 roads_minor = map_roads[map_roads['Road_class'].isin
                             (['<4M_TARRED','<4M_T_OVER','CL_MINOR','CL_M_OVER'])] # extracting all minor road sections
 
-## Specifying map layers based on user selection
+# Specifying map layers based on user selection
 if select_edited in counties['CountyName'].unique(): # check if selection is a specific county
+
+    # Add map title
+    
 
     # Generate road features and symbology for map plot, using roads_symbology function
     roads_motorways = roads_symbology(roads_motorways, 'motorway', 1)  # apply motorway symbology
@@ -141,7 +146,8 @@ if select_edited in counties['CountyName'].unique(): # check if selection is a s
     axes.add_feature(roads_bclass)  # add B-roads to map
     axes.add_feature(roads_minor)  # add minor roads to map
 
-    map_settlements = map_settlements[map_settlements['Band'].isin
+    # Selecting appropriate urban areas for map scale
+    map_settlements = map_settlements[map_settlements['Band'].isin # create updated version of GDF
                     (['A','B','C','D','E','F'])] # keep all urban areas with population>2,500
 
 elif select_edited == 'All': # check if all counties have been selected
@@ -159,6 +165,7 @@ elif select_edited == 'All': # check if all counties have been selected
     axes.add_feature(roads_aclass) # add A-roads to map
     axes.add_feature(roads_bclass) # add B-roads to map
 
+    # Selecting appropriate urban areas for map scale
     map_settlements = map_settlements[map_settlements['Band'].isin
                     (['A', 'B', 'C','D'])]  # keep all urban areas with population>10,000
 
@@ -183,7 +190,6 @@ for ind, row in settlement_labels.iterrows(): # iterate across the rows in the G
             transform=proj_crs) # confirm crs as EPSG:2158
 
 # Add map legend
-
 
 # Plotting the map
 #-----------------------------------------------------------------------------------------------------------------------
