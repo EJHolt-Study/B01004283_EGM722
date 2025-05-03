@@ -84,7 +84,7 @@ elif select_edited == 'All': # check if all counties have been selected
     map_roads = roads # updating variable name to match remaining script
     map_settlements = settlements # updating variable name to match remaining script
 
-## Generating map features ##
+## Generating map layers ##
 #-----------------------------------------------------------------------------------------------------------------------
 # Create figure and map axis
 proj_crs = ccrs.UTM(29) # create copy of project crs (EPSG: 2158 - UTM zone 29)
@@ -134,11 +134,11 @@ if select_edited in counties['CountyName'].unique(): # check if selection is a s
                loc='center') # align title to centre of the axes
 
     # Generate road features and symbology for map plot, using roads_symbology function
-    roads_motorways = roads_symbology(roads_motorways, 'motorway', 1)  # apply motorway symbology
-    roads_dualcarr = roads_symbology(roads_dualcarr, 'dualcarr', 0.75)  # apply dual-carriageway symbology
-    roads_aclass = roads_symbology(roads_aclass, 'aclass', 0.5)  # apply A-road symbology
-    roads_bclass = roads_symbology(roads_bclass, 'bclass', 0.4)  # apply B-road symbology
-    roads_minor = roads_symbology(roads_minor, 'minor', 0.3)  # apply minor road symbology
+    roads_motorways = roads_symbology(roads_motorways, 'motorway', 2)  # apply motorway symbology
+    roads_dualcarr = roads_symbology(roads_dualcarr, 'dualcarr', 1)  # apply dual-carriageway symbology
+    roads_aclass = roads_symbology(roads_aclass, 'aclass', 0.75)  # apply A-road symbology
+    roads_bclass = roads_symbology(roads_bclass, 'bclass', 0.6)  # apply B-road symbology
+    roads_minor = roads_symbology(roads_minor, 'minor', 0.5)  # apply minor road symbology
 
     # Add all road types to the plot
     axes.add_feature(roads_motorways)  # add motorways to map
@@ -154,15 +154,15 @@ if select_edited in counties['CountyName'].unique(): # check if selection is a s
 elif select_edited == 'All': # check if all counties have been selected
 
     # Add map title
-    axes.title('Northern Ireland Primary Road Network and Urban Areas',  # Add title w/ selected county
+    plt.title('Northern Ireland Primary Road Network and Urban Areas',  # Add title w/ selected county
                loc='center')  # align title to centre of the axes
 
     # Generate road features and symbology for map plot, using roads_symbology function
     # Add increased linewidth to account for smaller map scale
     roads_motorways = roads_symbology(roads_motorways, 'motorway', 2)  # apply motorway symbology
-    roads_dualcarr = roads_symbology(roads_dualcarr, 'dualcarr', 1)  # apply dual-carriageway symbology
-    roads_aclass = roads_symbology(roads_aclass, 'aclass', 0.75)  # apply A-road symbology
-    roads_bclass = roads_symbology(roads_bclass, 'bclass', 0.5)  # apply B-road symbology
+    roads_dualcarr = roads_symbology(roads_dualcarr, 'dualcarr', 1.5)  # apply dual-carriageway symbology
+    roads_aclass = roads_symbology(roads_aclass, 'aclass', 1)  # apply A-road symbology
+    roads_bclass = roads_symbology(roads_bclass, 'bclass', 0.75)  # apply B-road symbology
 
     # Add all road features except minor roads
     axes.add_feature(roads_motorways) # add motorways to map
@@ -194,13 +194,19 @@ for ind, row in settlement_labels.iterrows(): # iterate across the rows in the G
             fontsize=7, # select font size
             transform=proj_crs) # confirm crs as EPSG:2158
 
-#Add North Arrow
-northarrow = NorthArrow( # create north arrow class
+## Generating additional map features
+#-----------------------------------------------------------------------------------------------------------------------
+# Add North Arrow
+northarrow = NorthArrow( # create North Arrow class
     location="upper left", # position in upper left of axis
     scale=0.3, # set size as 0.5"
     rotation={"degrees":0})  # set rotation as 0
-axes.add_artist(northarrow) # add north arrow to map
+axes.add_artist(northarrow) # add North Arrow to map
 
+# Add Scale Bar
+sbar = ScaleBar(location='lower left',style="ticks",bar={"projection":2158,"minor_type":"first"},
+                labels={"style":"major"})
+axes.add_artist(sbar) # add scale bar to map
 
 # Add map legend
 
