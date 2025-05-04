@@ -28,7 +28,6 @@ settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-5
 counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # load NI County Boundaries - Shapefile(Polygon)
 roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # load NI Road Network - Shapefile(Line)
 
-
 # Converting GDFs to project CRS (EPSG: 2158)
 outline = outline.to_crs(epsg=2158)
 lakes = lakes.to_crs(epsg=2158)
@@ -40,6 +39,8 @@ roads = roads.to_crs(epsg=2158)
 #-----------------------------------------------------------------------------------------------------------------------
 # Creating user prompt step to select a specific county
 counties['CountyName'] = counties['CountyName'].str.title() # convert values in 'CountyNames' column to Title Case
+aligned_counties = counties
+aligned_counties = aligned_counties.applymap(lambda x: f"{x:<15}")
 print('Select county for map extent:') # add initial text
 print('') # add line break
 print('All') # print 'All' input option
