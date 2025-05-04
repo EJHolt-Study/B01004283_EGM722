@@ -11,6 +11,7 @@ import matplotlib.patheffects as pe
 from matplotlib_map_utils.core.north_arrow import NorthArrow, north_arrow
 from matplotlib_map_utils.core.scale_bar import ScaleBar, scale_bar
 import matplotlib.lines as mlines
+from pandas.core.interchange.dataframe_protocol import DataFrame
 #from pygments.styles.dracula import foreground
 from shapely.ops import unary_union
 from shapely.geometry.polygon import Polygon
@@ -39,12 +40,13 @@ roads = roads.to_crs(epsg=2158)
 #-----------------------------------------------------------------------------------------------------------------------
 # Creating user prompt step to select a specific county
 counties['CountyName'] = counties['CountyName'].str.title() # convert values in 'CountyNames' column to Title Case
-aligned_counties = counties
-aligned_counties = aligned_counties.applymap(lambda x: f"{x:<15}")
+aligned_counties = pd.DataFrame(counties['CountyName'])
+#aligned_counties = aligned_counties.applymap(lambda x: f"{x:<15}")
 print('Select county for map extent:') # add initial text
 print('') # add line break
 print('All') # print 'All' input option
 print(counties['CountyName'].to_string(index=False)) # prints County Names with index removed
+#print(aligned_counties.to_string(index=False,justify='left')) # prints County Names with index removed
 print('') # add line break
 
 selection = (input('Input county name here:')) # create user input parameter step
