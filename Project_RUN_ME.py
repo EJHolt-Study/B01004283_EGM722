@@ -10,6 +10,7 @@ import matplotlib.patches as mpatches
 import matplotlib.patheffects as pe
 from matplotlib_map_utils.core.north_arrow import NorthArrow, north_arrow
 from matplotlib_map_utils.core.scale_bar import ScaleBar, scale_bar
+import matplotlib.lines as mlines
 #from pygments.styles.dracula import foreground
 from shapely.ops import unary_union
 from shapely.geometry.polygon import Polygon
@@ -210,7 +211,25 @@ sbar = ScaleBar( # create Scale Bar class
                 labels={"style":"major"}) # add labels to all major divisions
 axes.add_artist(sbar) # add Scale Bar to map
 
+## Adding legend items
+#-----------------------------------------------------------------------------------------------------------------------
+
+# Create legend handles for polygon layer
+ni_land_handle = mpatches.Patch(color='green',label='Northern Ireland')
+settlements_handle = mpatches.Patch(facecolor='gray',edgecolor='dimgray',label='Urban Areas')
+lakes_handle = mpatches.Patch(color='blue',label='Lake Bodies')
+
+# Create legend handles for line layers
+motorway_handle = mlines.Line2D([],[],color='tab:blue',label=)
+dualcarr_handle = mlines.Line2D([],[],color='tab:cyan')
+a_roads_handle = mlines.Line2D([],[],color='tab:orange')
+b_roads_handle = mlines.Line2D([],[],color='tab:olive')
+minor_handle = mlines.Line2D([],[],color='tab:gray')
+
 # Add map legend
+axes.legend(handles=[ni_land_handle,settlements_handle,lakes_handle,motorway_handle,dualcarr_handle,a_roads_handle,
+                    b_roads_handle,minor_handle],
+                    loc='upper right',bbox_to_anchor=(1.04, 1))
 
 # Plotting the map
 #-----------------------------------------------------------------------------------------------------------------------
