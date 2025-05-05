@@ -21,7 +21,7 @@ def clip_features(input,overlay):
     clipped_objects = gpd.clip(input,overlay, # Adding clipped input GDF into new GDF objects to new list
                         keep_geom_type=True) # keep_geom_type=True ensures input geometry type remains consistent
 
-    return clipped_objects
+    return clipped_objects # return clipped GDF
 
 def roads_symbology(layer, road_type,thickness, kwargs=None):
     """
@@ -47,7 +47,7 @@ def roads_symbology(layer, road_type,thickness, kwargs=None):
     """
     proj_crs = ccrs.UTM(29)  # create copy of project crs (EPSG: 2158 - UTM zone 29)
 
-    symbology = layer
+    symbology = layer # Setting the input GDF to new variable
 
     if road_type == 'motorway': # set symbology for motorway GDF
         symbology = ShapelyFeature(layer['geometry'],proj_crs,color='tab:blue',linewidth=thickness,facecolor='none')
@@ -67,4 +67,4 @@ def roads_symbology(layer, road_type,thickness, kwargs=None):
     else: # return error message if invaild road type is provided
         raise ValueError("Provided road class invalid")
 
-    return symbology
+    return symbology # return symbology class
