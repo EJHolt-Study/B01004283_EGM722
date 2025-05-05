@@ -50,11 +50,13 @@ Select Custom environment as the Interpreter type. Select the Type as Conda. Sel
 Next, you need to ensure that your PyCharm Terminal is linked your conda environment. Go to File, Settings, and then in the pop-out window, Tools then Terminal. 
 
 On the Terminal tab, ensure that the Shell Path is in the following format:
+
 cmd.exe /K [conda location]\Scripts\activate.bat [conda location]
 
 The [conda location] should be the file path to your conda environment manager, for example: C:\User\Example\anaconda3
 Once you have updated the Shell Path select OK to close the window.
 Now open the Terminal window itself, and check that your project conda environment is activated. If not use the following command to activate the correct environment:
+
 conda activate B01004283_EGM722
 
 B01004283_EGM722 in the command above should be replaced with the name you have given to the conda environment.
