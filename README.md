@@ -5,6 +5,8 @@ B01004283_EGM722 is a python-based project designed to generate maps of counties
 The project primarily utilises the shapely, matplotlib, geopandas, and cartopy python packages, for processing the project datasets and generating the map figures. 
 The GitHub repository includes the relevant datasets required to run the project. These are contained in the ‘data_files’ folder. All the utilised datasets are in the form of ESRI Shapefiles (.shp). No additional datasets are required to run the project.
 
+For guidance on using the project, please refer to the user guide
+
 Setup
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 To run the project, it is recommended that you download and install the following software tools:
