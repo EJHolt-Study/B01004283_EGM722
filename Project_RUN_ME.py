@@ -217,12 +217,15 @@ axes.add_artist(sbar) # add Scale Bar to map
 ## Adding legend items
 #-----------------------------------------------------------------------------------------------------------------------
 # Create legend handles for polygon layer
-ni_land_handle = mpatches.Patch(color='green',label='Northern Ireland')
-settlements_handle = mpatches.Patch(facecolor='gray',edgecolor='dimgray',label='Urban Areas')
-lakes_handle = mpatches.Patch(color='blue',label='Lake Bodies')
+ni_land_handle = mpatches.Patch( # create legend handle NI outline map layer
+                color='green',label='Northern Ireland')
+settlements_handle = mpatches.Patch( # create legend handle NI settlements map layer
+                facecolor='gray',edgecolor='dimgray',label='Urban Areas')
+lakes_handle = mpatches.Patch( # create legend for NI lake bodies map layer
+                color='blue',label='Lake Bodies')
 
 # Create legend handles for line layers
-motorway_handle = mlines.Line2D([],[],color='tab:blue',label='Motorways')
+motorway_handle = mlines.Line2D([],[],color='tab:blue',label='Motorways') #
 dualcarr_handle = mlines.Line2D([],[],color='tab:cyan',label='Dual-Carriageway')
 a_roads_handle = mlines.Line2D([],[],color='tab:orange',label='A Roads')
 b_roads_handle = mlines.Line2D([],[],color='tab:olive',label='B Roads')
@@ -230,8 +233,8 @@ minor_handle = mlines.Line2D([],[],color='tab:gray',label='Minor Roads')
 
 # Add map legend
 axes.legend(handles=[ni_land_handle,settlements_handle,lakes_handle,motorway_handle,dualcarr_handle,a_roads_handle,
-                    b_roads_handle,minor_handle],
-                    loc='upper right',bbox_to_anchor=(1.04, 1))
+                    b_roads_handle,minor_handle], # add all created handles to the legend
+                    loc='upper right',bbox_to_anchor=(1.04, 1)) # specify legend location
 
 # Plotting the map
 #-----------------------------------------------------------------------------------------------------------------------
