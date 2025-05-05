@@ -1,7 +1,6 @@
 # Import support packages
+#-----------------------------------------------------------------------------------------------------------------------
 import os
-import numpy as np
-import rasterio as rio
 import pandas as pd
 import geopandas as gpd
 import cartopy.crs as ccrs
@@ -23,8 +22,11 @@ from data_processing import roads_symbology
 ## Setup project datasets ##
 #-----------------------------------------------------------------------------------------------------------------------
 # Importing vector datasets as GeoDataFrames (GDF)
-outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # load NI Border Outline - Shapefile(Polygon)
-lakes = gpd.read_file(os.path.abspath('data_files/Lake_Water_Bodies_2016.shp')) # load NI lake bodies - Shapefile(polygon)
+outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # load NI Border outline - Shapefile(Polygon)
+rep_ie_outline = gpd.read_file(os.path.abspath( # load Republic of Ireland Outline - Shapefile(Polygon)
+                            'data_files/ireland_boundary_epsg_2157.shp'))
+lakes = gpd.read_file(os.path.abspath( # load NI lake bodies - Shapefile(Polygon)
+                            'data_files/Lake_Water_Bodies_2016.shp'))
 settlements = gpd.read_file( # load NI Settlements (pop. over 500) - Shapefile(Polygon)
                             os.path.abspath('data_files/settlements-2015-above-500-threshold.shp'))
 counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # load NI County Boundaries - Shapefile(Polygon)
@@ -32,6 +34,7 @@ roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # load NI Road
 
 # Converting GDFs to project CRS (EPSG: 2158)
 outline = outline.to_crs(epsg=2158)
+rep_ie_outline = rep_ie_outline(epsg=2158)
 lakes = lakes.to_crs(epsg=2158)
 settlements = settlements.to_crs(epsg=2158)
 counties = counties.to_crs(epsg=2158)
@@ -40,9 +43,7 @@ roads = roads.to_crs(epsg=2158)
 ## Initial user input step to select map extent ##
 #-----------------------------------------------------------------------------------------------------------------------
 # Creating user prompt step to select a specific county
-counties['CountyName'] = counties['CountyName'].str.title() # convert values in 'CountyNames' column to Title Case
-aligned_counties = pd.DataFrame(counties['CountyName'])
-#aligned_counties = aligned_counties.applymap(lambda x: f"{x:<15}")
+counties['CountyName'] = counties['CountyName'].str.title() # convert values in 'CountyNames' column to title Case
 print('Select county for map extent:') # add initial text
 print('') # add line break
 print('All') # print 'All' input option
@@ -107,20 +108,25 @@ base_colour = ShapelyFeature(base['geometry'],
                              proj_crs,edgecolor='none',facecolor='lightblue') # define symbology for base layer
 axes.add_feature(base_colour,zorder=0) # add base layer to map, zorder used ensure plotting as bottom layer
 
+# Add Republic of Ireland border and background
+rep_ie_outline = ShapelyFeature(outline['geometry'],proj_crs,edgecolor='none',
+                           facecolor='green') # define symbology for Republic of Ireland background layer
+axes.add_feature(rep_ie_outline,zorder=1) # add Republic of Ireland background to map above base layer
+
 # Add NI outline to provide land background
 land_base = ShapelyFeature(outline['geometry'],proj_crs,edgecolor='none',
                            facecolor='green') # define symbology for land background layer
-axes.add_feature(land_base,zorder=1) # add land background to map above base layer
+axes.add_feature(land_base,zorder=2) # add land background to map above base layer
 
 # Add NI lake bodies shapefile
 map_lakes = ShapelyFeature(lakes['geometry'],proj_crs,edgecolor='none',
-                           facecolor='blue') # define lakes symbology
-axes.add_feature(map_lakes,zorder=2) # add lakes polygons to map above base layer and land background
+                           facecolor='aqua') # define lakes symbology
+axes.add_feature(map_lakes,zorder=3) # add lakes polygons to map above base layer and land background
 
 # Adding map features
 map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='k',facecolor='none') # defining county details...
 #... with black outline and transparent fill
-axes.add_feature(map_counties,zorder=3) # Add county layer to map axes
+axes.add_feature(map_counties,zorder=4) # Add county layer to map axes
 
 # Separating road GDF into the primary road types
 roads_motorways = map_roads[map_roads['Road_class']=='MOTORWAY'] # extracting all motorway road sections
@@ -224,7 +230,7 @@ ni_land_handle = mpatches.Patch( # create legend handle NI outline map layer
 settlements_handle = mpatches.Patch( # create legend handle NI settlements map layer
                 facecolor='gray',edgecolor='dimgray',label='Urban Areas')
 lakes_handle = mpatches.Patch( # create legend for NI lake bodies map layer
-                color='blue',label='Lake Bodies')
+                color='aqua',label='Lake Bodies')
 
 # Create legend handles for line layers
 motorway_handle = mlines.Line2D([],[],color='tab:blue',label='Motorways') # add Motorways handle

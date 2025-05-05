@@ -1,6 +1,4 @@
 import geopandas as gpd
-from shapely.ops import unary_union
-from shapely.geometry.polygon import Polygon
 from cartopy.feature import ShapelyFeature
 import cartopy.crs as ccrs
 
