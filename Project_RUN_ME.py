@@ -1,7 +1,6 @@
 # Import support packages
 #-----------------------------------------------------------------------------------------------------------------------
 import os
-import pandas as pd
 import geopandas as gpd
 import cartopy.crs as ccrs
 import matplotlib.pyplot as plt
@@ -10,10 +9,6 @@ import matplotlib.patheffects as pe
 from matplotlib_map_utils.core.north_arrow import NorthArrow, north_arrow
 from matplotlib_map_utils.core.scale_bar import ScaleBar, scale_bar
 import matplotlib.lines as mlines
-from pandas.core.interchange.dataframe_protocol import DataFrame
-#from pygments.styles.dracula import foreground
-from shapely.ops import unary_union
-from shapely.geometry.polygon import Polygon
 from shapely import box
 from cartopy.feature import ShapelyFeature
 from data_processing import clip_features
@@ -34,7 +29,7 @@ roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # load NI Road
 
 # Converting GDFs to project CRS (EPSG: 2158)
 outline = outline.to_crs(epsg=2158)
-rep_ie_outline = rep_ie_outline(epsg=2158)
+rep_ie_outline = rep_ie_outline.to_crs(epsg=2158)
 lakes = lakes.to_crs(epsg=2158)
 settlements = settlements.to_crs(epsg=2158)
 counties = counties.to_crs(epsg=2158)
@@ -109,8 +104,8 @@ base_colour = ShapelyFeature(base['geometry'],
 axes.add_feature(base_colour,zorder=0) # add base layer to map, zorder used ensure plotting as bottom layer
 
 # Add Republic of Ireland border and background
-rep_ie_outline = ShapelyFeature(outline['geometry'],proj_crs,edgecolor='none',
-                           facecolor='green') # define symbology for Republic of Ireland background layer
+rep_ie_outline = ShapelyFeature(rep_ie_outline['geometry'],proj_crs,edgecolor='none',
+                           facecolor='lightgreen') # define symbology for Republic of Ireland background layer
 axes.add_feature(rep_ie_outline,zorder=1) # add Republic of Ireland background to map above base layer
 
 # Add NI outline to provide land background
@@ -120,7 +115,7 @@ axes.add_feature(land_base,zorder=2) # add land background to map above base lay
 
 # Add NI lake bodies shapefile
 map_lakes = ShapelyFeature(lakes['geometry'],proj_crs,edgecolor='none',
-                           facecolor='aqua') # define lakes symbology
+                           facecolor='dodgerblue') # define lakes symbology
 axes.add_feature(map_lakes,zorder=3) # add lakes polygons to map above base layer and land background
 
 # Adding map features
@@ -153,11 +148,11 @@ if select_edited in counties['CountyName'].unique(): # check if selection is a s
     roads_minor = roads_symbology(roads_minor, 'minor', 0.5)  # apply minor road symbology
 
     # Add all road types to the plot
-    axes.add_feature(roads_motorways)  # add motorways to map
-    axes.add_feature(roads_dualcarr)  # add dual-carriageways to map
-    axes.add_feature(roads_aclass)  # add A-roads to map
-    axes.add_feature(roads_bclass)  # add B-roads to map
-    axes.add_feature(roads_minor)  # add minor roads to map
+    axes.add_feature(roads_motorways,zorder=10)  # add motorways to map
+    axes.add_feature(roads_dualcarr,zorder=9)  # add dual-carriageways to map
+    axes.add_feature(roads_aclass,zorder=8)  # add A-roads to map
+    axes.add_feature(roads_bclass,zorder=7)  # add B-roads to map
+    axes.add_feature(roads_minor,zorder=6)  # add minor roads to map
 
     # Selecting appropriate urban areas for map scale
     map_settlements = map_settlements[map_settlements['Band'].isin # create updated version of GDF
@@ -177,10 +172,10 @@ elif select_edited == 'All': # check if all counties have been selected
     roads_bclass = roads_symbology(roads_bclass, 'bclass', 0.75)  # apply B-road symbology
 
     # Add all road features except minor roads
-    axes.add_feature(roads_motorways) # add motorways to map
-    axes.add_feature(roads_dualcarr) # add dual-carriageways to map
-    axes.add_feature(roads_aclass) # add A-roads to map
-    axes.add_feature(roads_bclass) # add B-roads to map
+    axes.add_feature(roads_motorways,zorder=9) # add motorways to map
+    axes.add_feature(roads_dualcarr,zorder=8) # add dual-carriageways to map
+    axes.add_feature(roads_aclass,zorder=7) # add A-roads to map
+    axes.add_feature(roads_bclass,zorder=6) # add B-roads to map
 
     # Selecting appropriate urban areas for map scale
     map_settlements = map_settlements[map_settlements['Band'].isin
@@ -189,9 +184,9 @@ elif select_edited == 'All': # check if all counties have been selected
 # Generate symbology for settlements layer
 # Creating cartopy feature class for urban settlements layer, with translucent fill and dashed outline
 settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
-                                       edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=0.7)
+                                       edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=1)
 
-axes.add_feature(settlements_symbology) # Add settlement polygons to map
+axes.add_feature(settlements_symbology,zorder=5) # Add settlement polygons to map
 
 # Add map labels for urban areas (settlements)
 settlement_labels = map_settlements # creating new GDF to for label generation
@@ -204,14 +199,14 @@ for ind, row in settlement_labels.iterrows(): # iterate across the rows in the G
             color='black',
             path_effects=[pe.withStroke(linewidth=2,foreground='white')],# Add white border to labels
             fontsize=7, # select font size
-            transform=proj_crs) # confirm crs as EPSG:2158
+            transform=proj_crs,zorder=11) # confirm crs as EPSG:2158
 
 ## Generating additional map features
 #-----------------------------------------------------------------------------------------------------------------------
 # Add North Arrow
 northarrow = NorthArrow( # create North Arrow class
     location="upper left", # position in upper left of axis
-    scale=0.3, # set size as 0.5"
+    scale=0.3, # set size as 0.3"
     rotation={"degrees":0})  # set rotation as 0
 axes.add_artist(northarrow) # add North Arrow to map
 
@@ -227,10 +222,12 @@ axes.add_artist(sbar) # add Scale Bar to map
 # Create legend handles for polygon layer
 ni_land_handle = mpatches.Patch( # create legend handle NI outline map layer
                 color='green',label='Northern Ireland')
+rep_ie_handle = mpatches.Patch( # create legend handle for Republic of Ireland map layer
+                color='lightgreen',label='Republic of Ireland')
 settlements_handle = mpatches.Patch( # create legend handle NI settlements map layer
                 facecolor='gray',edgecolor='dimgray',label='Urban Areas')
 lakes_handle = mpatches.Patch( # create legend for NI lake bodies map layer
-                color='aqua',label='Lake Bodies')
+                color='dodgerblue',label='Lake Bodies')
 
 # Create legend handles for line layers
 motorway_handle = mlines.Line2D([],[],color='tab:blue',label='Motorways') # add Motorways handle
@@ -240,8 +237,8 @@ b_roads_handle = mlines.Line2D([],[],color='tab:olive',label='B Roads') # add B-
 minor_handle = mlines.Line2D([],[],color='tab:gray',label='Minor Roads') # add minor roads handle
 
 # Add map legend
-figure.legend(handles=[ni_land_handle,settlements_handle,lakes_handle,motorway_handle,dualcarr_handle,a_roads_handle,
-                    b_roads_handle,minor_handle], # add all created handles to the legend
+figure.legend(handles=[ni_land_handle,rep_ie_handle,lakes_handle,settlements_handle,motorway_handle,dualcarr_handle,
+                       a_roads_handle,b_roads_handle,minor_handle], # add all created handles to the legend
                     loc='center right',bbox_to_anchor=(0.9, 0.5), title='Legend') # specify legend location and title
 
 # Plotting the map
