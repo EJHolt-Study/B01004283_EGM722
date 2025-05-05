@@ -90,8 +90,7 @@ elif select_edited == 'All': # check if all counties have been selected
 # Create figure and map axis
 proj_crs = ccrs.UTM(29) # create copy of project crs (EPSG: 2158 - UTM zone 29)
 figure = plt.figure(figsize=(12,12)) # creating 12" by 12" figure
-#axes = plt.axes(projection=proj_crs) # create the map axes on the figure with project crs
-axes = plt.subplot(projection=proj_crs)
+axes = plt.subplot(projection=proj_crs) # create the map axes on the figure with project crs
 
 # Set map extent
 minx,miny,maxx,maxy = map_counties.total_bounds # create map extent variables using selected area
