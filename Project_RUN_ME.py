@@ -160,7 +160,7 @@ if select_edited in counties['CountyName'].unique(): # check if selection is a s
 elif select_edited == 'All': # check if all counties have been selected
 
     # Add map title
-    plt.title('Northern Ireland Primary Road Network and Urban Areas',  # Add title w/ selected county
+    plt.title('Northern Ireland Primary Road Network and Urban Areas',  # Add title
                loc='center')  # align title to centre of the axes
 
     # Generate road features and symbology for map plot, using roads_symbology function
@@ -181,7 +181,7 @@ elif select_edited == 'All': # check if all counties have been selected
                     (['A', 'B', 'C','D'])]  # keep all urban areas with population>10,000
 
 # Generate symbology for settlements layer
-# Creating cartopy feature class for urban settlements layer, with translucent fill and dashed outline
+# Creating cartopy feature class for urban settlements layer
 settlements_symbology = ShapelyFeature(map_settlements['geometry'],proj_crs,
                                        edgecolor='dimgray',facecolor='gray',linewidth=1,alpha=1)
 
