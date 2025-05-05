@@ -54,3 +54,15 @@ Now open the Terminal window itself, and check that your project conda environme
 conda activate B01004283_EGM722
 
 B01004283_EGM722 in the command above should be replaced with the name you have given to the conda environment.
+
+6 Setting up PyCharm Interpreter
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Next, to set-up the PyCharm interpreter, go to File, Settings, Project: B01004283_EGM722, Python Interpreter, Add Interpreter, Add Local Interpreter.
+
+On the pop-out window, for Environment choose Select Existing. Select the Type as Conda. Ensure the Path to Conda is the location of your conda environment manager and the second Environment field is set as your conda environment.
+
+7 Setting up PyCharm Run/Debug Configuration 
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Finally, you need to create your Run / Debug Configuration. Open the Project _RUN_ME.py and next to the play button in the top right, select Edit Configuration.
+
+In the pop-out window, under Run, select your conda environment. Under the Working directory, select the primary project folder and then select OK.
