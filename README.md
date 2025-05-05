@@ -10,7 +10,8 @@ For guidance on using the project, please refer to the user guide.
 Setup
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 To run the project, it is recommended that you download and install the following software tools:
-    Integrated development environment (IDE): PyCharm Community Edition(, or Professional Edition if you already have access)
+    Integrated development environment (IDE): PyCharm Community Edition(or Professional Edition if you already have access)
+   
     Conda environment and package manager: Anaconda Navigator
     
 Note that other IDEs and conda management tools are available, however the instructions in this document will only detail set-up using PyCharm and Anaconda Navigator.
