@@ -25,7 +25,8 @@ from data_processing import roads_symbology
 # Importing vector datasets as GeoDataFrames (GDF)
 outline = gpd.read_file(os.path.abspath('data_files/NI_outline.shp')) # load NI Border Outline - Shapefile(Polygon)
 lakes = gpd.read_file(os.path.abspath('data_files/Lake_Water_Bodies_2016.shp')) # load NI lake bodies - Shapefile(polygon)
-settlements = gpd.read_file(os.path.abspath('data_files/settlements-2015-above-500-threshold.shp')) # load NI Settlements (pop. over 500) - Shapefile(Polygon)
+settlements = gpd.read_file( # load NI Settlements (pop. over 500) - Shapefile(Polygon)
+                            os.path.abspath('data_files/settlements-2015-above-500-threshold.shp'))
 counties = gpd.read_file(os.path.abspath('data_files/Counties.shp')) # load NI County Boundaries - Shapefile(Polygon)
 roads = gpd.read_file(os.path.abspath('data_files/NI_roads.shp')) # load NI Road Network - Shapefile(Line)
 
@@ -92,8 +93,9 @@ elif select_edited == 'All': # check if all counties have been selected
 #-----------------------------------------------------------------------------------------------------------------------
 # Create figure and map axis
 proj_crs = ccrs.UTM(29) # create copy of project crs (EPSG: 2158 - UTM zone 29)
-figure = plt.figure(figsize=(10,10)) # creating 10" by 10" figure
-axes = plt.axes(projection=proj_crs) # create the map axes on the figure with project crs
+figure = plt.figure(figsize=(12,12)) # creating 12" by 12" figure
+#axes = plt.axes(projection=proj_crs) # create the map axes on the figure with project crs
+axes = plt.subplot(projection=proj_crs)
 
 # Set map extent
 minx,miny,maxx,maxy = map_counties.total_bounds # create map extent variables using selected area
@@ -118,7 +120,7 @@ axes.add_feature(map_lakes,zorder=2) # add lakes polygons to map above base laye
 # Adding map features
 map_counties = ShapelyFeature(counties['geometry'],proj_crs,edgecolor='k',facecolor='none') # defining county details...
 #... with black outline and transparent fill
-axes.add_feature(map_counties) # Add county layer to map axes
+axes.add_feature(map_counties,zorder=3) # Add county layer to map axes
 
 # Separating road GDF into the primary road types
 roads_motorways = map_roads[map_roads['Road_class']=='MOTORWAY'] # extracting all motorway road sections
@@ -225,20 +227,22 @@ lakes_handle = mpatches.Patch( # create legend for NI lake bodies map layer
                 color='blue',label='Lake Bodies')
 
 # Create legend handles for line layers
-motorway_handle = mlines.Line2D([],[],color='tab:blue',label='Motorways') #
-dualcarr_handle = mlines.Line2D([],[],color='tab:cyan',label='Dual-Carriageway')
-a_roads_handle = mlines.Line2D([],[],color='tab:orange',label='A Roads')
-b_roads_handle = mlines.Line2D([],[],color='tab:olive',label='B Roads')
-minor_handle = mlines.Line2D([],[],color='tab:gray',label='Minor Roads')
+motorway_handle = mlines.Line2D([],[],color='tab:blue',label='Motorways') # add Motorways handle
+dualcarr_handle = mlines.Line2D([],[],color='tab:cyan',label='Dual-Carriageway') # add Dual-carriageway handle
+a_roads_handle = mlines.Line2D([],[],color='tab:orange',label='A Roads') # add A-road handle
+b_roads_handle = mlines.Line2D([],[],color='tab:olive',label='B Roads') # add B-road handle
+minor_handle = mlines.Line2D([],[],color='tab:gray',label='Minor Roads') # add minor roads handle
 
 # Add map legend
-axes.legend(handles=[ni_land_handle,settlements_handle,lakes_handle,motorway_handle,dualcarr_handle,a_roads_handle,
+figure.legend(handles=[ni_land_handle,settlements_handle,lakes_handle,motorway_handle,dualcarr_handle,a_roads_handle,
                     b_roads_handle,minor_handle], # add all created handles to the legend
-                    loc='upper right',bbox_to_anchor=(1.04, 1)) # specify legend location
+                    loc='center right',bbox_to_anchor=(0.9, 0.5), title='Legend') # specify legend location and title
 
 # Plotting the map
 #-----------------------------------------------------------------------------------------------------------------------
 print('Once you have reviewed the map, please close the figure window')
+
+plt.subplots_adjust(right=0.85) # map axis moved to the left of the figure to allow space for map legend
 plt.show() # show map figure in pop-out window
 
 # Saving map plot
